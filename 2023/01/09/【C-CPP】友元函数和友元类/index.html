@@ -9,7 +9,7 @@
     
     <title>
         
-            【C/CPP】static静态成员变量和函数详解 |
+            【C/CPP】友元函数和友元类 |
         
         Fan&#39;s Blog
     </title>
@@ -158,7 +158,7 @@
         <div class="article-content-container">
 
             <div class="article-title">
-                <span class="title-hover-animation">【C/CPP】static静态成员变量和函数详解</span>
+                <span class="title-hover-animation">【C/CPP】友元函数和友元类</span>
             </div>
 
             
@@ -180,13 +180,13 @@
         
             <i class="fa-regular fa-calendar-plus"></i>&nbsp;
         
-        <span class="pc">2023-01-08 22:55:48</span>
-        <span class="mobile">2023-01-08 22:55</span>
+        <span class="pc">2023-01-09 23:18:34</span>
+        <span class="mobile">2023-01-09 23:18</span>
     </span>
     
         <span class="article-update-date article-meta-item">
         <i class="fas fa-file-pen"></i>&nbsp;
-        <span class="pc">2023-01-08 23:22:41</span>
+        <span class="pc">2023-01-09 23:48:43</span>
     </span>
     
     
@@ -219,38 +219,22 @@
             
 
             <div class="article-content keep-markdown-body">
-                <h2 id="静态成员变量"><a href="#静态成员变量" class="headerlink" title="静态成员变量"></a>静态成员变量</h2><p>对象的内存中包含了成员变量，不同对象占用不同内存，使得不同对象的成员变量相互独立。如果希望多个对象之间共享数据，典型使用场景是计数，可以使用静态成员变量来实现多个对象共享数据的目标。</p>
-<p><strong>静态成员变量是一种特殊的成员变量，被关键字<code>static</code>修饰。</strong></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Student</span>();</span><br><span class="line">    ~<span class="built_in">Student</span>();</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">static</span> <span class="type">int</span> total_;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+                <p>友元（friend）可以使其他类中的成员函数以及全局范围内的函数访问当前类的 private 成员。</p>
+<h2 id="友元函数"><a href="#友元函数" class="headerlink" title="友元函数"></a>友元函数</h2><p><strong>友元函数可以是不属于任何类的非成员函数，也可以是其他类的成员函数</strong>，在类中声明时要在前面加 friend 关键字。</p>
+<h3 id="将非成员函数声明为友元函数"><a href="#将非成员函数声明为友元函数" class="headerlink" title="将非成员函数声明为友元函数"></a>将非成员函数声明为友元函数</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">friend</span> <span class="type">void</span> <span class="title">show</span><span class="params">(Student *pStu)</span></span>;	<span class="comment">// 将show()声明为友元函数</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">char</span> *name_;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">show</span><span class="params">(Student *pStu)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cout &lt;&lt; pStu-&gt;name_ &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">Student <span class="title">std</span><span class="params">(<span class="string">&quot;Jone&quot;</span>)</span></span>;</span><br><span class="line">    <span class="built_in">show</span>(&amp;std);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>这段代码声明了一个静态成员变量total_，用来统计学生人数。</p>
-<p>static成员变量属于类，不属于某个具体的对象，必须在类声明的外部初始化，具体形式为：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> Student::total_ = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+<p>show() 是一个全局范围函的非成员函数，不属于任何类，声明为Student类的友元函数后即可访问类中的private成员。</p>
+<blockquote>
+<p>  注意，友元函数不同于类的成员函数，在<strong>友元函数中不能直接访问类的成员</strong>，必须要借助对象。</p>
+<p>  成员函数调用时会隐式的增加 this 指针，才能访问到该对象的成员；而 show() 是非成员函数，没有 this 指针，所以无法访问成员，必须通过参数传递对象来访问。</p>
+</blockquote>
+<h3 id="将其他类的成员函数声明为友元函数"><a href="#将其他类的成员函数声明为友元函数" class="headerlink" title="将其他类的成员函数声明为友元函数"></a>将其他类的成员函数声明为友元函数</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Address</span>;	<span class="comment">//提前声明要用到的类</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">show</span><span class="params">(Address *pAddr)</span></span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">char</span> *name_;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Address</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">friend</span> <span class="type">void</span> <span class="title">Student::show</span><span class="params">(Address *pAddr)</span></span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">char</span> *address_;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Student::show</span><span class="params">(Address *pAddr)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cout &lt;&lt; name_ &lt;&lt; pAddr-&gt;address_ &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">Student <span class="title">std</span><span class="params">(<span class="string">&quot;Jone&quot;</span>)</span></span>;</span><br><span class="line">    <span class="function">Address <span class="title">addr</span><span class="params">(<span class="string">&quot;China&quot;</span>)</span></span></span><br><span class="line"><span class="function">    std.<span class="title">show</span><span class="params">(&amp;addr)</span></span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<p>在 Student 类中使用到了 Address 类，所以要提前进行声明。Student 类中的成员函数 show() 使用了 Address 的成员，所以在定义之前要先声明 Address 类。</p>
 <blockquote>
-<p>  <strong>注意：</strong>static成员变量的内存既不是在声明类分配，也不是创建对象分配，而是在类外初始化时分配。没有在类外初始化的static成员变量无法使用。</p>
-<p>  static 成员变量不占用对象的内存，而是在所有对象之外开辟内存，即使不创建对象也可以访问。</p>
+<p>  类只有在正式声明后才能创建对象，在对一个类作了提前声明后，可以用该类的名字去定义指向该类型对象的<strong>指针变量或引用变量</strong>。</p>
 </blockquote>
-<p><strong>总结：</strong></p>
-<ul>
-<li>一个类中可以有一个或多个静态成员变量，所有的对象都共享这些静态成员变量，都可以引用它。</li>
-<li>static 成员变量和普通 static 变量一样，都在内存分区中的全局数据区分配内存，到程序结束时才释放。这就意味着，static 成员变量不随对象的创建而分配内存，也不随对象的销毁而释放内存。而普通成员变量在对象创建时分配内存，在对象销毁时释放内存。</li>
-<li>静态成员变量必须初始化，而且只能在类体外进行。初始化不赋值会被默认初始化为0。</li>
-<li>静态成员变量既可以通过对象名访问，也可以通过类名访问，但要遵循 private、protected 和 public 关键字的访问权限限制。当通过对象名访问时，对于不同的对象，访问的是同一份内存。</li>
-</ul>
-<blockquote>
-<p>  全局数据区的变量都有默认的初始值 0，而动态数据区（堆区、栈区）变量的默认值是不确定的，一般认为是垃圾值。</p>
-</blockquote>
-<p>普通成员函数可以访问所有成员（包括成员变量和成员函数），<strong>静态成员函数只能访问静态成员。</strong></p>
-<h2 id="静态成员函数"><a href="#静态成员函数" class="headerlink" title="静态成员函数"></a>静态成员函数</h2><p>编译器在编译一个普通成员函数时，会隐式地增加一个形参 this，并把当前对象的地址赋值给 this，所以普通成员函数只能在创建对象后通过对象来调用，因为它需要当前对象的地址。</p>
-<p>静态成员函数可以通过类来直接调用，编译器不会为它增加形参 this，它不需要当前对象的地址，所以<strong>不管有没有创建对象，都可以调用静态成员函数</strong>。</p>
-<p>静态成员函数没有 this 指针，不知道指向哪个对象，无法访问对象的成员变量，也就是说<strong>静态成员函数不能访问普通成员变量，只能访问静态成员变量</strong>。</p>
-<p><strong>静态成员函数与普通成员函数的区别</strong>：</p>
-<ul>
-<li>普通成员函数有 this 指针，可以访问类中的任意成员；</li>
-<li>静态成员函数没有 this 指针，只能访问静态成员（包括静态成员变量和静态成员函数）。</li>
-</ul>
-<p>和静态成员变量类似，静态成员函数在声明时要加 static，在定义时不能加 static。静态成员函数可以通过类来调用（一般都是这样做），也可以通过对象来调用。</p>
+<p>一个函数可以被对各类声明为友元函数，即可以访问多个类中的 private 成员。</p>
 
             </div>
 
@@ -259,16 +243,16 @@
                     <div class="article-copyright-info-container">
     <ul class="copyright-info-content">
         <li>
-            <span class="type">Post title</span>：<span class="content">【C/CPP】static静态成员变量和函数详解</span>
+            <span class="type">Post title</span>：<span class="content">【C/CPP】友元函数和友元类</span>
         </li>
         <li>
             <span class="type">Post author</span>：<span class="content">Fan</span>
         </li>
         <li>
-            <span class="type">Create time</span>：<span class="content">2023-01-08 22:55:48</span>
+            <span class="type">Create time</span>：<span class="content">2023-01-09 23:18:34</span>
         </li>
         <li class="post-link">
-            <span class="type">Post link</span>：<span class="content">2023/01/08/【C-CPP】静态成员变量和函数/</span>
+            <span class="type">Post link</span>：<span class="content">2023/01/09/【C-CPP】友元函数和友元类/</span>
         </li>
         <li>
             <span class="type">Copyright Notice</span>：<span class="content">All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.</span>
@@ -292,29 +276,14 @@
             
                 <div class="article-nav">
                     
-                        <div class="article-prev">
-                            <a class="prev"
-                               rel="prev"
-                               href="/2023/01/09/%E3%80%90C-CPP%E3%80%91const%E4%BF%AE%E9%A5%B0%E7%AC%A6/"
-                            >
-                            <span class="left arrow-icon flex-center">
-                              <i class="fas fa-chevron-left"></i>
-                            </span>
-                                <span class="title flex-center">
-                                <span class="post-nav-title-item">【C/CPP】const修饰符</span>
-                                <span class="post-nav-item">Prev posts</span>
-                            </span>
-                            </a>
-                        </div>
-                    
                     
                         <div class="article-next">
                             <a class="next"
                                rel="next"
-                               href="/2023/01/08/%E3%80%90%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E3%80%91%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%B1%BB%E5%9E%8B/"
+                               href="/2023/01/09/%E3%80%90C-CPP%E3%80%91const%E4%BF%AE%E9%A5%B0%E7%AC%A6/"
                             >
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">【数据结构】基本数据结构类型</span>
+                                <span class="post-nav-title-item">【C/CPP】const修饰符</span>
                                 <span class="post-nav-item">Next posts</span>
                             </span>
                                 <span class="right arrow-icon flex-center">
@@ -352,7 +321,7 @@
             <div class="toc-content-container">
                 <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F"><span class="nav-number">1.</span> <span class="nav-text">静态成员变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">静态成员函数</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">友元函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%86%E9%9D%9E%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E5%A3%B0%E6%98%8E%E4%B8%BA%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0"><span class="nav-number">1.1.</span> <span class="nav-text">将非成员函数声明为友元函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%86%E5%85%B6%E4%BB%96%E7%B1%BB%E7%9A%84%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E5%A3%B0%E6%98%8E%E4%B8%BA%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0"><span class="nav-number">1.2.</span> <span class="nav-text">将其他类的成员函数声明为友元函数</span></a></li></ol></li></ol>
     </div>
 </div>
 
