@@ -186,7 +186,7 @@
     
         <span class="article-update-date article-meta-item">
         <i class="fas fa-file-pen"></i>&nbsp;
-        <span class="pc">2023-01-09 23:48:43</span>
+        <span class="pc">2023-01-10 22:44:35</span>
     </span>
     
     
@@ -235,6 +235,15 @@
 <p>  类只有在正式声明后才能创建对象，在对一个类作了提前声明后，可以用该类的名字去定义指向该类型对象的<strong>指针变量或引用变量</strong>。</p>
 </blockquote>
 <p>一个函数可以被对各类声明为友元函数，即可以访问多个类中的 private 成员。</p>
+<h2 id="友元类"><a href="#友元类" class="headerlink" title="友元类"></a>友元类</h2><p>将整个类声明为另一个类的朋友，就是友元类。友元类中的所有成员函数都是另一个类的友元函数。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Address</span>;	<span class="comment">//提前声明要用到的类</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">show</span><span class="params">(Address *pAddr)</span></span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">char</span> *name_;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Address</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">friend</span> <span class="keyword">class</span> <span class="title class_">Student</span>;	<span class="comment">// 将Student类声明为Address类的友元类</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">char</span> *address_;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Student::show</span><span class="params">(Address *pAddr)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cout &lt;&lt; name_ &lt;&lt; pAddr-&gt;address_ &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>需要注意：</p>
+<ul>
+<li>友元的关系是单向的而不是双向的。</li>
+<li>友元的关系不能传递。</li>
+</ul>
+<p>一般不建议把整个类声明为友元类，而只将某些成员函数声明为友元函数。</p>
 
             </div>
 
@@ -321,7 +330,7 @@
             <div class="toc-content-container">
                 <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">友元函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%86%E9%9D%9E%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E5%A3%B0%E6%98%8E%E4%B8%BA%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0"><span class="nav-number">1.1.</span> <span class="nav-text">将非成员函数声明为友元函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%86%E5%85%B6%E4%BB%96%E7%B1%BB%E7%9A%84%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E5%A3%B0%E6%98%8E%E4%B8%BA%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0"><span class="nav-number">1.2.</span> <span class="nav-text">将其他类的成员函数声明为友元函数</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">友元函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%86%E9%9D%9E%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E5%A3%B0%E6%98%8E%E4%B8%BA%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0"><span class="nav-number">1.1.</span> <span class="nav-text">将非成员函数声明为友元函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%86%E5%85%B6%E4%BB%96%E7%B1%BB%E7%9A%84%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E5%A3%B0%E6%98%8E%E4%B8%BA%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0"><span class="nav-number">1.2.</span> <span class="nav-text">将其他类的成员函数声明为友元函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8B%E5%85%83%E7%B1%BB"><span class="nav-number">2.</span> <span class="nav-text">友元类</span></a></li></ol>
     </div>
 </div>
 
