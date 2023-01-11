@@ -9,7 +9,7 @@
     
     <title>
         
-            【C/CPP】const修饰符 |
+            【C/CPP】继承与派生 |
         
         Fan&#39;s Blog
     </title>
@@ -158,7 +158,7 @@
         <div class="article-content-container">
 
             <div class="article-title">
-                <span class="title-hover-animation">【C/CPP】const修饰符</span>
+                <span class="title-hover-animation">【C/CPP】继承与派生</span>
             </div>
 
             
@@ -180,13 +180,13 @@
         
             <i class="fa-regular fa-calendar-plus"></i>&nbsp;
         
-        <span class="pc">2023-01-09 22:43:50</span>
-        <span class="mobile">2023-01-09 22:43</span>
+        <span class="pc">2023-01-11 21:31:05</span>
+        <span class="mobile">2023-01-11 21:31</span>
     </span>
     
         <span class="article-update-date article-meta-item">
         <i class="fas fa-file-pen"></i>&nbsp;
-        <span class="pc">2023-01-09 23:12:17</span>
+        <span class="pc">2023-01-11 23:08:48</span>
     </span>
     
     
@@ -219,21 +219,44 @@
             
 
             <div class="article-content keep-markdown-body">
-                <p>如果不希望某些数据被修改，可以使用<code>const</code>关键字限定。</p>
-<h2 id="const-成员变量和成员函数"><a href="#const-成员变量和成员函数" class="headerlink" title="const 成员变量和成员函数"></a>const 成员变量和成员函数</h2><p>const成员变量在<strong>初始化时只能通过构造函数的初始化列表</strong>。</p>
-<p>const成员函数可以使用类中的所有成员变量，但是不能修改其值，主要是为了保护数据设置。通常将get函数设置成常成员函数。</p>
-<p>常成员函数在声明和定义的时候需要在<strong>函数头部后面加上const关键字</strong>。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">char</span> *<span class="title">getName</span><span class="params">()</span> <span class="type">const</span></span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">char</span> *name_;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">char</span>* <span class="title">Student::getName</span><span class="params">()</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> name_;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+                <p><strong>继承</strong>是一个类从另一个类获取成员变量和成员函数的过程，被继承的类称为父类或基类，继承的类称为子类或派生类。</p>
+<span id="more"></span>
 
-<p>注意 const 的位置区分：</p>
+<p>使用继承的典型场景：</p>
 <ul>
-<li>函数开头的 const 修饰的是函数的返回值，表示返回值是const类型，不能被修改，例如<code>const char* getName()</code>。</li>
-<li>函数头部结尾的 const 表示常成员函数，只能读取成员变量的值，不能修改成员变量。</li>
+<li>创建的新类与现有类相似，只是多出了一些成员变量或成员函数。</li>
+<li>需要创建多个类，拥有很多相似的成员变量或成员函数。</li>
 </ul>
-<h2 id="const-对象"><a href="#const-对象" class="headerlink" title="const 对象"></a>const 对象</h2><p>const修饰对象称为<strong>常对象</strong>，对象被定义为<strong>常对象只能调用类的 const 成员</strong>（包括 const 成员变量和 const 成员函数）。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">const</span> <span class="keyword">class</span> <span class="title">object</span><span class="params">(para)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">class</span> <span class="type">const</span> <span class="title">object</span><span class="params">(para)</span></span>;</span><br><span class="line"><span class="type">const</span> <span class="keyword">class</span> *p = <span class="keyword">new</span> <span class="built_in">class</span>(para);</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">const</span> *p = <span class="keyword">new</span> <span class="built_in">class</span>(para);</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> 派生类名 : [继承方式] 基类名 &#123;</span><br><span class="line">    派生类新增成员</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
-<p>无论哪种形式，只要定义为常对象就只能访问被 const 修饰的成员。</p>
+<h2 id="继承方式"><a href="#继承方式" class="headerlink" title="继承方式"></a>继承方式</h2><p>继承方式限定了基类成员在派生类中的访问权限，包括 public、private和protected，缺省默认为 private。</p>
+<ol>
+<li><strong>public 继承方式</strong><ul>
+<li>基类的 public 成员在派生类为 public</li>
+<li>基类的 protected 成员在派生类为 protected</li>
+<li>基类的 private 成员在派生类中不能使用</li>
+</ul>
+</li>
+<li><strong>protected 继承方式</strong><ul>
+<li>基类的 public 成员和 protected  成员在派生类为 protected </li>
+<li>基类的 private 成员在派生类中不能使用</li>
+</ul>
+</li>
+<li><strong>private 继承方式</strong><ul>
+<li>基类的 public 成员和 protected 成员在派生类为 private 属性</li>
+<li>基类的 private 成员在派生类中不能使用</li>
+</ul>
+</li>
+</ol>
+<p>首先，基类成员在派生类中的访问权限不会超过继承方式指定的权限。其次，基类的 private 成员在派生类中始终无法访问。</p>
+<blockquote>
+<p>  注意：基类的 private 成员只是在派生类中不可见，并不是不能被继承。实际基类的 private 成员会占用派生类对象的内存。</p>
+<p>  使用 private 和 protected 继承方式会改变访问权限，导致继承关系复杂，实际开发中一般使用public。</p>
+</blockquote>
+<p>使用 using 关键字可以修改基类成员在派生类中的访问权限，只能修改基类中 public 和 protected 成员的访问权限。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">People</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">show</span><span class="params">()</span></span>;</span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">    <span class="type">char</span> *m_name;</span><br><span class="line">    <span class="type">int</span> m_age;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span> : <span class="keyword">public</span> People &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">using</span> People::m_name;  <span class="comment">//将protected改为public</span></span><br><span class="line">    <span class="keyword">using</span> People::m_age;   <span class="comment">//将protected改为public</span></span><br><span class="line">    <span class="type">float</span> m_score;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">using</span> People::show;  <span class="comment">//将public改为private</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>如果派生类成员和基类成员重名，则只会访问到派生类新增的成员，基类成员函数和派生类成员函数不构成重载，即使参数不同。</p>
 
             </div>
 
@@ -242,16 +265,16 @@
                     <div class="article-copyright-info-container">
     <ul class="copyright-info-content">
         <li>
-            <span class="type">Post title</span>：<span class="content">【C/CPP】const修饰符</span>
+            <span class="type">Post title</span>：<span class="content">【C/CPP】继承与派生</span>
         </li>
         <li>
             <span class="type">Post author</span>：<span class="content">Fan</span>
         </li>
         <li>
-            <span class="type">Create time</span>：<span class="content">2023-01-09 22:43:50</span>
+            <span class="type">Create time</span>：<span class="content">2023-01-11 21:31:05</span>
         </li>
         <li class="post-link">
-            <span class="type">Post link</span>：<span class="content">2023/01/09/【C-CPP】const修饰符/</span>
+            <span class="type">Post link</span>：<span class="content">2023/01/11/【C-CPP】继承与派生/</span>
         </li>
         <li>
             <span class="type">Copyright Notice</span>：<span class="content">All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.</span>
@@ -278,13 +301,13 @@
                         <div class="article-prev">
                             <a class="prev"
                                rel="prev"
-                               href="/2023/01/09/%E3%80%90C-CPP%E3%80%91%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0%E5%92%8C%E5%8F%8B%E5%85%83%E7%B1%BB/"
+                               href="/2023/01/11/%E5%BF%AB%E9%80%9F%E5%85%A5%E5%8F%A3/"
                             >
                             <span class="left arrow-icon flex-center">
                               <i class="fas fa-chevron-left"></i>
                             </span>
                                 <span class="title flex-center">
-                                <span class="post-nav-title-item">【C/CPP】友元函数和友元类</span>
+                                <span class="post-nav-title-item">快速入口</span>
                                 <span class="post-nav-item">Prev posts</span>
                             </span>
                             </a>
@@ -294,10 +317,10 @@
                         <div class="article-next">
                             <a class="next"
                                rel="next"
-                               href="/2023/01/08/%E3%80%90C-CPP%E3%80%91%E9%9D%99%E6%80%81%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F%E5%92%8C%E5%87%BD%E6%95%B0/"
+                               href="/2023/01/09/%E3%80%90C-CPP%E3%80%91%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0%E5%92%8C%E5%8F%8B%E5%85%83%E7%B1%BB/"
                             >
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">【C/CPP】static静态成员变量和函数详解</span>
+                                <span class="post-nav-title-item">【C/CPP】友元函数和友元类</span>
                                 <span class="post-nav-item">Next posts</span>
                             </span>
                                 <span class="right arrow-icon flex-center">
@@ -335,7 +358,7 @@
             <div class="toc-content-container">
                 <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#const-%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F%E5%92%8C%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">const 成员变量和成员函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#const-%E5%AF%B9%E8%B1%A1"><span class="nav-number">2.</span> <span class="nav-text">const 对象</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%A7%E6%89%BF%E6%96%B9%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">继承方式</span></a></li></ol>
     </div>
 </div>
 
