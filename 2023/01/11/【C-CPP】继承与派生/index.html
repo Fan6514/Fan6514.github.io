@@ -186,7 +186,7 @@
     
         <span class="article-update-date article-meta-item">
         <i class="fas fa-file-pen"></i>&nbsp;
-        <span class="pc">2023-01-11 23:08:48</span>
+        <span class="pc">2023-01-12 22:32:10</span>
     </span>
     
     
@@ -220,8 +220,6 @@
 
             <div class="article-content keep-markdown-body">
                 <p><strong>继承</strong>是一个类从另一个类获取成员变量和成员函数的过程，被继承的类称为父类或基类，继承的类称为子类或派生类。</p>
-<span id="more"></span>
-
 <p>使用继承的典型场景：</p>
 <ul>
 <li>创建的新类与现有类相似，只是多出了一些成员变量或成员函数。</li>
@@ -248,7 +246,7 @@
 </ul>
 </li>
 </ol>
-<p>首先，基类成员在派生类中的访问权限不会超过继承方式指定的权限。其次，基类的 private 成员在派生类中始终无法访问。</p>
+<p>首先，基类成员在派生类中的访问权限不会超过继承方式指定的权限。其次，<strong>基类的 private 成员在派生类中始终无法访问。</strong></p>
 <blockquote>
 <p>  注意：基类的 private 成员只是在派生类中不可见，并不是不能被继承。实际基类的 private 成员会占用派生类对象的内存。</p>
 <p>  使用 private 和 protected 继承方式会改变访问权限，导致继承关系复杂，实际开发中一般使用public。</p>
@@ -257,6 +255,10 @@
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">People</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">show</span><span class="params">()</span></span>;</span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">    <span class="type">char</span> *m_name;</span><br><span class="line">    <span class="type">int</span> m_age;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span> : <span class="keyword">public</span> People &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">using</span> People::m_name;  <span class="comment">//将protected改为public</span></span><br><span class="line">    <span class="keyword">using</span> People::m_age;   <span class="comment">//将protected改为public</span></span><br><span class="line">    <span class="type">float</span> m_score;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">using</span> People::show;  <span class="comment">//将public改为private</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 <p>如果派生类成员和基类成员重名，则只会访问到派生类新增的成员，基类成员函数和派生类成员函数不构成重载，即使参数不同。</p>
+<h2 id="构造函数和析构函数"><a href="#构造函数和析构函数" class="headerlink" title="构造函数和析构函数"></a>构造函数和析构函数</h2><p>基类的成员函数可以被继承，但是构造函数不能被继承。需要在派生类中的构造函数调用基类的构造函数，来初始化基类的成员变量。</p>
+<p>基类构造函数不会被继承，不能当作普通的成员函数调用，需要放在参数初始化列表中。基类构造函数无论在参数初始化列表什么位置，<strong>派生类函数总是先调用基类构造函数再执行其他代码</strong>。</p>
+<p>派生类构造函数只能调用直接基类的构造函数，不能调用间接基类的。</p>
+<p>机构函数也不能被继承，但再派生类的析构函数中不需要显示地调用基类的析构函数。在销毁派生类对象时，析构函数的执行顺序与继承顺序相反，先执行派生类析构函数，再执行基类析构函数。</p>
 
             </div>
 
@@ -358,7 +360,7 @@
             <div class="toc-content-container">
                 <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%A7%E6%89%BF%E6%96%B9%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">继承方式</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%A7%E6%89%BF%E6%96%B9%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">继承方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8C%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">构造函数和析构函数</span></a></li></ol>
     </div>
 </div>
 
