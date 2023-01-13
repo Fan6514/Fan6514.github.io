@@ -186,7 +186,7 @@
     
         <span class="article-update-date article-meta-item">
         <i class="fas fa-file-pen"></i>&nbsp;
-        <span class="pc">2023-01-12 22:32:10</span>
+        <span class="pc">2023-01-14 00:13:56</span>
     </span>
     
     
@@ -258,7 +258,15 @@
 <h2 id="构造函数和析构函数"><a href="#构造函数和析构函数" class="headerlink" title="构造函数和析构函数"></a>构造函数和析构函数</h2><p>基类的成员函数可以被继承，但是构造函数不能被继承。需要在派生类中的构造函数调用基类的构造函数，来初始化基类的成员变量。</p>
 <p>基类构造函数不会被继承，不能当作普通的成员函数调用，需要放在参数初始化列表中。基类构造函数无论在参数初始化列表什么位置，<strong>派生类函数总是先调用基类构造函数再执行其他代码</strong>。</p>
 <p>派生类构造函数只能调用直接基类的构造函数，不能调用间接基类的。</p>
-<p>机构函数也不能被继承，但再派生类的析构函数中不需要显示地调用基类的析构函数。在销毁派生类对象时，析构函数的执行顺序与继承顺序相反，先执行派生类析构函数，再执行基类析构函数。</p>
+<p>析构函数也不能被继承，但再派生类的析构函数中不需要显示地调用基类的析构函数。在销毁派生类对象时，析构函数的执行顺序与继承顺序相反，先执行派生类析构函数，再执行基类析构函数。</p>
+<h2 id="向上转型"><a href="#向上转型" class="headerlink" title="向上转型"></a>向上转型</h2><p>类也是一种数据类型，也可以发生数据类型转换，不过这种转换只在基类和派生类直接才有意义，这能<strong>将派生类赋值给基类，称为向上转型</strong>。将基类赋值给派生类称为向下转型。</p>
+<p>将派生类赋值给基类，只会将基类存在的成员变量赋值，舍弃掉派生类新增的成员。</p>
+<p>通过基类指针访问派生类成员：</p>
+<ul>
+<li>访问成员变量，指针指向哪个对象就使用哪个对象的数据。</li>
+<li>访问成员函数，指针属于哪个类的类型就使用哪个类的函数。</li>
+</ul>
+<p>基类的引用也可以指向派生类的对象，并且它的表现和指针是类似的。</p>
 
             </div>
 
@@ -360,7 +368,7 @@
             <div class="toc-content-container">
                 <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%A7%E6%89%BF%E6%96%B9%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">继承方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8C%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">构造函数和析构函数</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%A7%E6%89%BF%E6%96%B9%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">继承方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8C%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">构造函数和析构函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%91%E4%B8%8A%E8%BD%AC%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">向上转型</span></a></li></ol>
     </div>
 </div>
 
