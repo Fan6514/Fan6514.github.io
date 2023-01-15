@@ -9,7 +9,7 @@
     
     <title>
         
-            【C/CPP】typeid运算符获取类型信息 |
+            【数据结构】散列表 |
         
         Fan&#39;s Blog
     </title>
@@ -158,7 +158,7 @@
         <div class="article-content-container">
 
             <div class="article-title">
-                <span class="title-hover-animation">【C/CPP】typeid运算符获取类型信息</span>
+                <span class="title-hover-animation">【数据结构】散列表</span>
             </div>
 
             
@@ -180,13 +180,13 @@
         
             <i class="fa-regular fa-calendar-plus"></i>&nbsp;
         
-        <span class="pc">2023-01-15 18:03:07</span>
-        <span class="mobile">2023-01-15 18:03</span>
+        <span class="pc">2023-01-15 20:38:29</span>
+        <span class="mobile">2023-01-15 20:38</span>
     </span>
     
         <span class="article-update-date article-meta-item">
         <i class="fas fa-file-pen"></i>&nbsp;
-        <span class="pc">2023-01-15 20:26:38</span>
+        <span class="pc">2023-01-15 23:00:02</span>
     </span>
     
     
@@ -196,7 +196,7 @@
             <ul>
                 
                     <li>
-                        <a href="/tags/cpp/">cpp</a>&nbsp;
+                        <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>&nbsp;
                     </li>
                 
             </ul>
@@ -219,15 +219,40 @@
             
 
             <div class="article-content keep-markdown-body">
-                <p>typeid 运算符用来获取一个表达式的类型信息。类型信息描述了数据的属性：</p>
+                <p>散列表（Hash Table）通常称为哈希表，根据数组支持下标随机访问数据的特性，通过<strong>散列函数</strong>将元素的**键(key)**映射为下标，然后将数据存储在数组中对应下标的位置。</p>
+<h2 id="散列函数"><a href="#散列函数" class="headerlink" title="散列函数"></a>散列函数</h2><p>散列函数可以定义成 <code>hash(key)</code>，其中 key 表示元素的键值，hash(key) 的值表示经过散列函数计算得到的散列值。</p>
+<p>散列函数设计的基本要求：</p>
 <ul>
-<li>基本类型数据的类型信息主要是数据的类型。</li>
-<li>类的数据类型信息是指所属的类、包含的成员和所在的继承关系等。</li>
+<li>散列函数计算得到的散列值是一个非负整数。</li>
+<li>如果 key1 &#x3D;&#x3D; key2，那 hash(key1) &#x3D;&#x3D; hash(key2)。</li>
+<li>如果 key1 !&#x3D; key2，那 hash(key1) !&#x3D; hash(key2)。</li>
 </ul>
-<p>类型信息是创建数据的模板，数据占用多大内存、能进行什么样的操作、该如何操作等，这些都由它的类型信息决定。</p>
-<p>typeid 的操作对象既可以是表达式，也可以是数据类型。typeid 会把获取的类型信息保存在<code>type_info</code>类型的对象中，并返回该对象的常引用，通过成员函数来获取具体类型信息。</p>
-<p>typeid 通常用来判断两个类型是否相同。使用 typeid 比较类型时，即使基类指针指向派生类，基类指针的类型不会改变。</p>
-<p><code>type_info</code>声明在 <code>typeinfo</code>头文件中。</p>
+<h2 id="散列冲突"><a href="#散列冲突" class="headerlink" title="散列冲突"></a>散列冲突</h2><p>散列函数要求中，键值不同但散列函数转换生成的索引值相同，称为<strong>散列冲突</strong>。散列冲突的解决方法有两类，开放寻址法和链表法。</p>
+<h3 id="开放寻址法"><a href="#开放寻址法" class="headerlink" title="开放寻址法"></a>开放寻址法</h3><p>开放寻址法的核心思想是，如果出现散列冲突，就重新探测一个空闲的位置插入元素。</p>
+<p><strong>线性探测</strong>（Linear Probing）是插入数据时，如果散列之后的存储位置已经被占用，就依次往后查找空闲位置。在查找数据时，如果遍历到空闲位置还没有找到数据，就说明要查找的数据不在散列表中。</p>
+<p>通过线性探测法设计的散列函数，在删除数据时需要注意，不能直接将要删除的元素置空。如果直接置空的话会产生一个空闲位置，影响其他元素的查询和删除。可以将要删除的元素标记下来，当线性探测查找时，遇到该标记会继续向下探测。</p>
+<p><strong>二次探测</strong>（Quadratic Probing）跟线性探测类似，线性探测每次探测的步长是1，二次探测的步长是原来的二次方，即探测的下标序列为 hash(key)+0，hash(key)+1^2，hash(key)+2^2……</p>
+<p><strong>双重散列</strong>（Double hashing）是使用一组散列函数依次进行计算，如果得到的存储位置被占用，就继续使用下一个散列函数，知道找到空闲的位置。</p>
+<p>使用线性探测法，随着空闲位置的减少，散列冲突的概率会大大提高，查找效率会变低。使用<strong>装载因子</strong>（Load Factor）来表示空位的多少，装载因子的计算公式是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">装载因子 = 填入元素个数 / 散列表的长度</span><br></pre></td></tr></table></figure>
+
+<h3 id="链表法"><a href="#链表法" class="headerlink" title="链表法"></a>链表法</h3><p>链表法是一种更加常用的散列冲突解决办法。在散列表中，每个“桶（bucket）”或者“槽（slot）”会对应一条链表，<strong>所有散列值相同的元素我们都放到相同槽位对应的链表中</strong>。</p>
+<img  
+                     lazyload
+                     alt="image"
+                     data-src="https://files.catbox.moe/iva511.webp"
+                      style="zoom: 50%;" 
+                >
+
+<p>插入数据时只需要通过散列函数计算出对应的散列槽位，将其插入对应的链表中即可，插入的时间复杂度是O(1)。</p>
+<h2 id="散列表设计"><a href="#散列表设计" class="headerlink" title="散列表设计"></a>散列表设计</h2><h3 id="散列函数设计"><a href="#散列函数设计" class="headerlink" title="散列函数设计"></a>散列函数设计</h3><p><strong>散列函数的设计不能太复杂</strong>。过于复杂的散列函数会消耗计算时间。其次，<strong>散列函数生成的值要尽可能随机并且均匀分布</strong>，这样才能避免或者最小化散列冲突。</p>
+<h3 id="装载因子过大"><a href="#装载因子过大" class="headerlink" title="装载因子过大"></a>装载因子过大</h3><p>装载因子越大，说明散列表中的元素越多，空闲位置越少，散列冲突的概率就越大。当装载因子过大时，我们也可以进行<strong>动态扩容</strong>，重新申请一个更大的散列表，将数据搬移到这个新散列表中。</p>
+<p>动态扩容会重新申请内存并将原来的散列表搬移到新的散列表中，这就会导致极个别的插入操作耗时较多。我们可以将扩容操作穿插在插入操作的过程中，当装载因子达到阈值后，只申请内存并将新数据插入在新的散列表中，之后每插入一个数据，就将新数据插入新散列表中，然后从老的散列表拿出一个数据放到新散列表。这期间的查询操作，先从新表中查找，然后再到旧表中查找。</p>
+<h3 id="散列冲突解决方法"><a href="#散列冲突解决方法" class="headerlink" title="散列冲突解决方法"></a>散列冲突解决方法</h3><p>开放寻址法数据都存储在数组中，查询速度较快，序列化简单。但在删除数据时比较麻烦，而且散列冲突的代价更高。当<strong>数据量较小，装载因子小的时候适合用开放寻址法</strong>，Java 中的 ThreadLocalMap 使用了开放寻址法。</p>
+<blockquote>
+<p>  开放寻址法只能适用于装载因子小于1的情况，接近1时会有大量的散列冲突。</p>
+</blockquote>
+<p>链表法内存利用率较高，只要散列函数的值随即均匀，即便装载因子高，也只是链表的长度变长，查找效率比顺序查找要快。</p>
 
             </div>
 
@@ -236,16 +261,16 @@
                     <div class="article-copyright-info-container">
     <ul class="copyright-info-content">
         <li>
-            <span class="type">Post title</span>：<span class="content">【C/CPP】typeid运算符获取类型信息</span>
+            <span class="type">Post title</span>：<span class="content">【数据结构】散列表</span>
         </li>
         <li>
             <span class="type">Post author</span>：<span class="content">Fan</span>
         </li>
         <li>
-            <span class="type">Create time</span>：<span class="content">2023-01-15 18:03:07</span>
+            <span class="type">Create time</span>：<span class="content">2023-01-15 20:38:29</span>
         </li>
         <li class="post-link">
-            <span class="type">Post link</span>：<span class="content">2023/01/15/【C-CPP】typeid运算符获取类型信息/</span>
+            <span class="type">Post link</span>：<span class="content">2023/01/15/【数据结构】散列表/</span>
         </li>
         <li>
             <span class="type">Copyright Notice</span>：<span class="content">All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.</span>
@@ -260,7 +285,7 @@
                 <ul class="post-tags-box">
                     
                         <li class="tag-item">
-                            <a href="/tags/cpp/">#cpp</a>&nbsp;
+                            <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">#数据结构</a>&nbsp;
                         </li>
                     
                 </ul>
@@ -269,29 +294,14 @@
             
                 <div class="article-nav">
                     
-                        <div class="article-prev">
-                            <a class="prev"
-                               rel="prev"
-                               href="/2023/01/15/%E3%80%90%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E3%80%91%E6%95%A3%E5%88%97%E8%A1%A8/"
-                            >
-                            <span class="left arrow-icon flex-center">
-                              <i class="fas fa-chevron-left"></i>
-                            </span>
-                                <span class="title flex-center">
-                                <span class="post-nav-title-item">【数据结构】散列表</span>
-                                <span class="post-nav-item">Prev posts</span>
-                            </span>
-                            </a>
-                        </div>
-                    
                     
                         <div class="article-next">
                             <a class="next"
                                rel="next"
-                               href="/2023/01/15/%E3%80%90C-CPP%E3%80%91%E5%A4%9A%E6%80%81%E4%B8%8E%E8%99%9A%E5%87%BD%E6%95%B0/"
+                               href="/2023/01/15/%E3%80%90C-CPP%E3%80%91typeid%E8%BF%90%E7%AE%97%E7%AC%A6%E8%8E%B7%E5%8F%96%E7%B1%BB%E5%9E%8B%E4%BF%A1%E6%81%AF/"
                             >
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">【C/CPP】多态与虚函数</span>
+                                <span class="post-nav-title-item">【C/CPP】typeid运算符获取类型信息</span>
                                 <span class="post-nav-item">Next posts</span>
                             </span>
                                 <span class="right arrow-icon flex-center">
@@ -329,7 +339,7 @@
             <div class="toc-content-container">
                 <div class="post-toc-wrap">
     <div class="post-toc">
-        
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%A3%E5%88%97%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">散列函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%A3%E5%88%97%E5%86%B2%E7%AA%81"><span class="nav-number">2.</span> <span class="nav-text">散列冲突</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E6%94%BE%E5%AF%BB%E5%9D%80%E6%B3%95"><span class="nav-number">2.1.</span> <span class="nav-text">开放寻址法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%93%BE%E8%A1%A8%E6%B3%95"><span class="nav-number">2.2.</span> <span class="nav-text">链表法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%A3%E5%88%97%E8%A1%A8%E8%AE%BE%E8%AE%A1"><span class="nav-number">3.</span> <span class="nav-text">散列表设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%A3%E5%88%97%E5%87%BD%E6%95%B0%E8%AE%BE%E8%AE%A1"><span class="nav-number">3.1.</span> <span class="nav-text">散列函数设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A3%85%E8%BD%BD%E5%9B%A0%E5%AD%90%E8%BF%87%E5%A4%A7"><span class="nav-number">3.2.</span> <span class="nav-text">装载因子过大</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%A3%E5%88%97%E5%86%B2%E7%AA%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="nav-number">3.3.</span> <span class="nav-text">散列冲突解决方法</span></a></li></ol></li></ol>
     </div>
 </div>
 
