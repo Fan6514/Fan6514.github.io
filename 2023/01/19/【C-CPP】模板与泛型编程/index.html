@@ -9,7 +9,7 @@
     
     <title>
         
-            【C/CPP】运算符重载 |
+            【C/CPP】模板与泛型编程 |
         
         Fan&#39;s Blog
     </title>
@@ -158,7 +158,7 @@
         <div class="article-content-container">
 
             <div class="article-title">
-                <span class="title-hover-animation">【C/CPP】运算符重载</span>
+                <span class="title-hover-animation">【C/CPP】模板与泛型编程</span>
             </div>
 
             
@@ -180,13 +180,13 @@
         
             <i class="fa-regular fa-calendar-plus"></i>&nbsp;
         
-        <span class="pc">2023-01-16 22:34:10</span>
-        <span class="mobile">2023-01-16 22:34</span>
+        <span class="pc">2023-01-19 22:42:35</span>
+        <span class="mobile">2023-01-19 22:42</span>
     </span>
     
         <span class="article-update-date article-meta-item">
         <i class="fas fa-file-pen"></i>&nbsp;
-        <span class="pc">2023-01-17 23:27:18</span>
+        <span class="pc">2023-01-19 23:41:47</span>
     </span>
     
     
@@ -219,25 +219,28 @@
             
 
             <div class="article-content keep-markdown-body">
-                <p><strong>函数重载</strong>（Function Overloading）可以让一个函数名有多种功能，在不同情况下进行不同的操作。<strong>运算符重载</strong>（Operator Overloading）可以让同一个运算符可以有不同的功能。</p>
-<p>运算符重载的实质是将运算符重载为一个函数，使用运算符的表达式就被解释为对重载函数的调用，格式为：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">返回值类型 <span class="keyword">operator</span> 运算符名称(形参列表)&#123;</span><br><span class="line">    <span class="comment">// <span class="doctag">TODO:</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>operator</code>是关键字，专门用于定义重载运算符的函数。</p>
-<p>运算符可以重载为全局函数。函数参数个数是运算符操作数的个数，运算符的操作数就成为函数的实参。</p>
-<p>运算符也可以重载为成员函数。此时函数的参数个数就是运算符的操作数个数减一，运算符的操作数有一个成为函数作用的对象，其余的成为函数的实参。</p>
-<p>自增和自减操作各有两种重载方式，用来区分前置用法和后置用法：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Operator</span>&#123;</span><br><span class="line">	Operator <span class="keyword">operator</span>++();			<span class="comment">// ++i 前置形式</span></span><br><span class="line">    Operator <span class="keyword">operator</span>++(<span class="type">int</span> n);		<span class="comment">// i++ 后置形式</span></span><br><span class="line">&#125;;</span><br><span class="line">Operator Operator::<span class="keyword">operator</span>++() &#123;</span><br><span class="line">    <span class="comment">//<span class="doctag">TODO:</span></span></span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line">Operator Operator::<span class="keyword">operator</span>++(<span class="type">int</span> n) &#123;</span><br><span class="line">    Operator res = *<span class="keyword">this</span>;</span><br><span class="line">    <span class="comment">//<span class="doctag">TODO:</span></span></span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>运算符需要注意：</p>
+                <p>泛型编程（generic programming）在实现时不指定具体要操作的数据类型，只要实现一遍，就能适用于多种数据类型。泛型程序设计方法的优势在于能够减少重复代码的编写。</p>
+<p>数据类型可以通过参数来传递，在函数定义时可以不指明具体的数据类型，当函数调用时，编译器根据传入的实参自动判断数据类型，即类型的参数化。</p>
+<h2 id="强类型语言与弱类型语言"><a href="#强类型语言与弱类型语言" class="headerlink" title="强类型语言与弱类型语言"></a>强类型语言与弱类型语言</h2><p>编程语言根据“在定义变量时是否需要显式地指明数据类型”可以分为<strong>强类型语言</strong>和<strong>弱类型语言</strong>。</p>
 <ul>
-<li>不是所有运算符都可以重载，长度运算符sizeof、条件运算符<code>:?</code>、成员选择符<code>.</code>、成员指针<code>.*</code>和域解析运算符<code>::</code>不能被重载。</li>
-<li>重载不能改变运算符的优先级和结合性。</li>
-<li>重载不会改变运算符的用法，应该尽量保持运算符原本特性。</li>
-<li>运算符重载函数不能有默认的参数，否则就改变了运算符操作数的个数。</li>
-<li>运算符重载函数既可以作为类的成员函数，也可以作为全局函数（友元函数）。作为成员函数时，二元运算符参数只有一个，一元运算符不需要参数。</li>
-<li>箭头运算符<code>-&gt;</code>、下标运算符<code>[]</code>、函数调用运算符<code>()</code>、赋值运算符<code>=</code>只能以成员函数的形式重载。</li>
+<li>强类型语言在定义变量时需要显式地指明数据类型，一旦为变量指明了某种数据类型就不能赋予其他类型的数据，除非进行强制类型转换或隐式类型转换。</li>
+<li>弱类型语言在定义变量时不需要显示地指明数据类型，编译器或解释器会根据赋值变量地数据自动推导类型。</li>
 </ul>
+<h2 id="函数模板"><a href="#函数模板" class="headerlink" title="函数模板"></a>函数模板</h2><p><strong>函数模板（Function Template）</strong>，实际上是建立一个通用函数，其数据的类型（包括返回值类型、形参类型、局部变量类型）可以不具体指定，而是用一个虚拟的类型来代替（实际上是用一个标识符来占位），等发生函数调用时再根据传入的实参来逆推出真正的类型。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Swap</span><span class="params">(T &amp;a, T &amp;b)</span> </span>&#123;</span><br><span class="line">    T temp = a;</span><br><span class="line">    a = b;</span><br><span class="line">    b = temp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>template</code>是定义函数模板的关键字，<code>typename</code>关键字用来声明具体的参数类型。</p>
+<blockquote>
+<p>  <code>class</code>关键字也可以用作函数模板声明，有很多代码中使用了class关键字，但是在新的代码中建议使用template，因为class已经用于类的定义中。</p>
+</blockquote>
+<h2 id="类模板"><a href="#类模板" class="headerlink" title="类模板"></a>类模板</h2><p><strong>类模板（Class Template）</strong>中定义的类型参数可以用在类声明和类实现中。类模板的目的同样是将数据的类型参数化。</p>
+<p>声明类模板的语法：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> 类型参数<span class="number">1</span>, <span class="keyword">typename</span> 类型参数<span class="number">2</span>, ...&gt;</span><br><span class="line"><span class="keyword">class</span> 类名&#123;</span><br><span class="line">  <span class="comment">// <span class="doctag">TODO:</span>  </span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> 类型参数<span class="number">1</span>, <span class="keyword">typename</span> 类型参数<span class="number">2</span>, ...&gt;</span><br><span class="line">返回值类型 类名&lt;类型参数<span class="number">1</span>, 类型参数<span class="number">2</span>, ...&gt;::函数名(形参列表)&#123;</span><br><span class="line">    <span class="comment">//<span class="doctag">TODO:</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>类模板的类型参数可以用于类的成员函数和成员变量。</p>
+<p>使用类模板创建对象时，需要显示地指明具体的数据类型。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">vector&lt;string&gt; <span class="title">first</span><span class="params">(<span class="number">4</span>, <span class="string">&quot;first&quot;</span>)</span></span>;</span><br><span class="line">vector&lt;string&gt; *pSecond = <span class="keyword">new</span> <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(<span class="number">4</span>, <span class="string">&quot;second&quot;</span>);</span><br></pre></td></tr></table></figure>
+
 
             </div>
 
@@ -246,16 +249,16 @@
                     <div class="article-copyright-info-container">
     <ul class="copyright-info-content">
         <li>
-            <span class="type">Post title</span>：<span class="content">【C/CPP】运算符重载</span>
+            <span class="type">Post title</span>：<span class="content">【C/CPP】模板与泛型编程</span>
         </li>
         <li>
             <span class="type">Post author</span>：<span class="content">Fan</span>
         </li>
         <li>
-            <span class="type">Create time</span>：<span class="content">2023-01-16 22:34:10</span>
+            <span class="type">Create time</span>：<span class="content">2023-01-19 22:42:35</span>
         </li>
         <li class="post-link">
-            <span class="type">Post link</span>：<span class="content">2023/01/16/【C-CPP】运算符重载/</span>
+            <span class="type">Post link</span>：<span class="content">2023/01/19/【C-CPP】模板与泛型编程/</span>
         </li>
         <li>
             <span class="type">Copyright Notice</span>：<span class="content">All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.</span>
@@ -279,29 +282,14 @@
             
                 <div class="article-nav">
                     
-                        <div class="article-prev">
-                            <a class="prev"
-                               rel="prev"
-                               href="/2023/01/19/%E3%80%90C-CPP%E3%80%91%E6%A8%A1%E6%9D%BF%E4%B8%8E%E6%B3%9B%E5%9E%8B%E7%BC%96%E7%A8%8B/"
-                            >
-                            <span class="left arrow-icon flex-center">
-                              <i class="fas fa-chevron-left"></i>
-                            </span>
-                                <span class="title flex-center">
-                                <span class="post-nav-title-item">【C/CPP】模板与泛型编程</span>
-                                <span class="post-nav-item">Prev posts</span>
-                            </span>
-                            </a>
-                        </div>
-                    
                     
                         <div class="article-next">
                             <a class="next"
                                rel="next"
-                               href="/2023/01/15/%E3%80%90%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E3%80%91%E6%95%A3%E5%88%97%E8%A1%A8/"
+                               href="/2023/01/16/%E3%80%90C-CPP%E3%80%91%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD/"
                             >
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">【数据结构】散列表</span>
+                                <span class="post-nav-title-item">【C/CPP】运算符重载</span>
                                 <span class="post-nav-item">Next posts</span>
                             </span>
                                 <span class="right arrow-icon flex-center">
@@ -339,7 +327,7 @@
             <div class="toc-content-container">
                 <div class="post-toc-wrap">
     <div class="post-toc">
-        
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%BA%E7%B1%BB%E5%9E%8B%E8%AF%AD%E8%A8%80%E4%B8%8E%E5%BC%B1%E7%B1%BB%E5%9E%8B%E8%AF%AD%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">强类型语言与弱类型语言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E6%A8%A1%E6%9D%BF"><span class="nav-number">2.</span> <span class="nav-text">函数模板</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E6%A8%A1%E6%9D%BF"><span class="nav-number">3.</span> <span class="nav-text">类模板</span></a></li></ol>
     </div>
 </div>
 
