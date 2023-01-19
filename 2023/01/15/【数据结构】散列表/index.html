@@ -186,7 +186,7 @@
     
         <span class="article-update-date article-meta-item">
         <i class="fas fa-file-pen"></i>&nbsp;
-        <span class="pc">2023-01-16 22:01:59</span>
+        <span class="pc">2023-01-20 00:38:11</span>
     </span>
     
     
@@ -253,6 +253,20 @@
 <p>  开放寻址法只能适用于装载因子小于1的情况，接近1时会有大量的散列冲突。</p>
 </blockquote>
 <p>链表法内存利用率较高，只要散列函数的值随即均匀，即便装载因子高，也只是链表的长度变长，查找效率比顺序查找要快。</p>
+<h2 id="LRU-缓存淘汰算法"><a href="#LRU-缓存淘汰算法" class="headerlink" title="LRU 缓存淘汰算法"></a>LRU 缓存淘汰算法</h2><p>计算机的缓存容量有限，如果缓存满了就要删除一些内容，给新内容腾位置。LRU 缓存淘汰算法就是一种删除最少使用数据地策略。</p>
+<p>通过链表实现 LRU 缓存淘汰算法，需要维护一个按照访问时间从大到小有序排列地链表，缓存不够时直接删除链表头部节点。当缓存某元素时先遍历链表查询，如果存在，则将节点移动到链表尾，否则直接插入到链表尾。这样实现地 LRU 缓存淘汰算法时间复杂度O(n)很高。</p>
+<p>使用散列表和链表的组合可以将插入、删除和查找操作的时间复杂度降低到O(1)。</p>
+<img  
+                     lazyload
+                     alt="image"
+                     data-src="https://files.catbox.moe/cjlbcn.webp"
+                      style="zoom:50%;" 
+                >
+
+<p>使用双向链表存储数据，每个节点除了数据、前驱节点和后继节点外，增加了 hnext 用来将节点串在散列表的拉链中。</p>
+<p>查找数据时，使用散列表查找数据时间复杂度接近O(1)，找到数据后移动到双向链表的尾部。</p>
+<p>删除数据首先查找到节点，使用双向链表删除节点只需要O(1)时间复杂度。</p>
+<p>添加数据也要查找节点，如果存在则将其移动到双向链表尾部；如果不在，需要查看缓存是否已满，如果满了将双向链表头部节点删除，然后将数据放在链表尾部；如果缓存不满，直接添加数据到链表尾。</p>
 
             </div>
 
@@ -354,7 +368,7 @@
             <div class="toc-content-container">
                 <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%A3%E5%88%97%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">散列函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%A3%E5%88%97%E5%86%B2%E7%AA%81"><span class="nav-number">2.</span> <span class="nav-text">散列冲突</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E6%94%BE%E5%AF%BB%E5%9D%80%E6%B3%95"><span class="nav-number">2.1.</span> <span class="nav-text">开放寻址法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%93%BE%E8%A1%A8%E6%B3%95"><span class="nav-number">2.2.</span> <span class="nav-text">链表法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%A3%E5%88%97%E8%A1%A8%E8%AE%BE%E8%AE%A1"><span class="nav-number">3.</span> <span class="nav-text">散列表设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%A3%E5%88%97%E5%87%BD%E6%95%B0%E8%AE%BE%E8%AE%A1"><span class="nav-number">3.1.</span> <span class="nav-text">散列函数设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A3%85%E8%BD%BD%E5%9B%A0%E5%AD%90%E8%BF%87%E5%A4%A7"><span class="nav-number">3.2.</span> <span class="nav-text">装载因子过大</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%A3%E5%88%97%E5%86%B2%E7%AA%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="nav-number">3.3.</span> <span class="nav-text">散列冲突解决方法</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%A3%E5%88%97%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">散列函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%A3%E5%88%97%E5%86%B2%E7%AA%81"><span class="nav-number">2.</span> <span class="nav-text">散列冲突</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E6%94%BE%E5%AF%BB%E5%9D%80%E6%B3%95"><span class="nav-number">2.1.</span> <span class="nav-text">开放寻址法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%93%BE%E8%A1%A8%E6%B3%95"><span class="nav-number">2.2.</span> <span class="nav-text">链表法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%A3%E5%88%97%E8%A1%A8%E8%AE%BE%E8%AE%A1"><span class="nav-number">3.</span> <span class="nav-text">散列表设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%A3%E5%88%97%E5%87%BD%E6%95%B0%E8%AE%BE%E8%AE%A1"><span class="nav-number">3.1.</span> <span class="nav-text">散列函数设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A3%85%E8%BD%BD%E5%9B%A0%E5%AD%90%E8%BF%87%E5%A4%A7"><span class="nav-number">3.2.</span> <span class="nav-text">装载因子过大</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%A3%E5%88%97%E5%86%B2%E7%AA%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="nav-number">3.3.</span> <span class="nav-text">散列冲突解决方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LRU-%E7%BC%93%E5%AD%98%E6%B7%98%E6%B1%B0%E7%AE%97%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">LRU 缓存淘汰算法</span></a></li></ol>
     </div>
 </div>
 
