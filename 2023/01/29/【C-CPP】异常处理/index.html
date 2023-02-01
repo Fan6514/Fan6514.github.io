@@ -9,7 +9,7 @@
     
     <title>
         
-            【C/CPP】模板与泛型编程 |
+            【C/CPP】异常处理 |
         
         Fan&#39;s Blog
     </title>
@@ -158,7 +158,7 @@
         <div class="article-content-container">
 
             <div class="article-title">
-                <span class="title-hover-animation">【C/CPP】模板与泛型编程</span>
+                <span class="title-hover-animation">【C/CPP】异常处理</span>
             </div>
 
             
@@ -180,13 +180,13 @@
         
             <i class="fa-regular fa-calendar-plus"></i>&nbsp;
         
-        <span class="pc">2023-01-19 22:42:35</span>
-        <span class="mobile">2023-01-19 22:42</span>
+        <span class="pc">2023-01-29 21:34:57</span>
+        <span class="mobile">2023-01-29 21:34</span>
     </span>
     
         <span class="article-update-date article-meta-item">
         <i class="fas fa-file-pen"></i>&nbsp;
-        <span class="pc">2023-01-19 23:41:47</span>
+        <span class="pc">2023-02-01 23:42:15</span>
     </span>
     
     
@@ -219,28 +219,126 @@
             
 
             <div class="article-content keep-markdown-body">
-                <p>泛型编程（generic programming）在实现时不指定具体要操作的数据类型，只要实现一遍，就能适用于多种数据类型。泛型程序设计方法的优势在于能够减少重复代码的编写。</p>
-<p>数据类型可以通过参数来传递，在函数定义时可以不指明具体的数据类型，当函数调用时，编译器根据传入的实参自动判断数据类型，即类型的参数化。</p>
-<h2 id="强类型语言与弱类型语言"><a href="#强类型语言与弱类型语言" class="headerlink" title="强类型语言与弱类型语言"></a>强类型语言与弱类型语言</h2><p>编程语言根据“在定义变量时是否需要显式地指明数据类型”可以分为<strong>强类型语言</strong>和<strong>弱类型语言</strong>。</p>
-<ul>
-<li>强类型语言在定义变量时需要显式地指明数据类型，一旦为变量指明了某种数据类型就不能赋予其他类型的数据，除非进行强制类型转换或隐式类型转换。</li>
-<li>弱类型语言在定义变量时不需要显示地指明数据类型，编译器或解释器会根据赋值变量地数据自动推导类型。</li>
-</ul>
-<h2 id="函数模板"><a href="#函数模板" class="headerlink" title="函数模板"></a>函数模板</h2><p><strong>函数模板（Function Template）</strong>，实际上是建立一个通用函数，其数据的类型（包括返回值类型、形参类型、局部变量类型）可以不具体指定，而是用一个虚拟的类型来代替（实际上是用一个标识符来占位），等发生函数调用时再根据传入的实参来逆推出真正的类型。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Swap</span><span class="params">(T &amp;a, T &amp;b)</span> </span>&#123;</span><br><span class="line">    T temp = a;</span><br><span class="line">    a = b;</span><br><span class="line">    b = temp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>template</code>是定义函数模板的关键字，<code>typename</code>关键字用来声明具体的参数类型。</p>
+                <p>异常处理机制用来捕获运行时的错误，让程序继续执行，或者在结束程序前保存内存中的数据、关闭文件、释放内存等。</p>
 <blockquote>
-<p>  <code>class</code>关键字也可以用作函数模板声明，有很多代码中使用了class关键字，但是在新的代码中建议使用template，因为class已经用于类的定义中。</p>
+<p>  抛出异常，就是报告一个运行时错误，程序根据错误信息进一步处理。</p>
 </blockquote>
-<h2 id="类模板"><a href="#类模板" class="headerlink" title="类模板"></a>类模板</h2><p><strong>类模板（Class Template）</strong>中定义的类型参数可以用在类声明和类实现中。类模板的目的同样是将数据的类型参数化。</p>
-<p>声明类模板的语法：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> 类型参数<span class="number">1</span>, <span class="keyword">typename</span> 类型参数<span class="number">2</span>, ...&gt;</span><br><span class="line"><span class="keyword">class</span> 类名&#123;</span><br><span class="line">  <span class="comment">// <span class="doctag">TODO:</span>  </span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> 类型参数<span class="number">1</span>, <span class="keyword">typename</span> 类型参数<span class="number">2</span>, ...&gt;</span><br><span class="line">返回值类型 类名&lt;类型参数<span class="number">1</span>, 类型参数<span class="number">2</span>, ...&gt;::函数名(形参列表)&#123;</span><br><span class="line">    <span class="comment">//<span class="doctag">TODO:</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过异常机制捕获抛出的异常，避免程序崩溃。捕获异常的语法：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="comment">// 可能抛出异常的语句</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">catch</span>(exceptionType variable)&#123;</span><br><span class="line">    <span class="comment">// 处理异常的语句</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>类模板的类型参数可以用于类的成员函数和成员变量。</p>
-<p>使用类模板创建对象时，需要显示地指明具体的数据类型。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">vector&lt;string&gt; <span class="title">first</span><span class="params">(<span class="number">4</span>, <span class="string">&quot;first&quot;</span>)</span></span>;</span><br><span class="line">vector&lt;string&gt; *pSecond = <span class="keyword">new</span> <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(<span class="number">4</span>, <span class="string">&quot;second&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p>其中<code>exceptionType</code>是异常类型，指明当前的 catch 可以处理什么类型的异常；<code>variable</code>是一个变量，用来接收异常信息。</p>
+<p>发生异常时必须将异常明确地抛出，try 才能检测到；如果不抛出来，即使有异常 try 也检测不到。抛出异常就是要明确地告诉程序放生了什么错误。</p>
+<p>检测到异常后程序的执行会从异常点跳转到 catch 所在的位置，位于异常点之后的、并且在当前 try 块内的语句就都不会再执行。执行完 catch 块包含的语句后会继续执行后面的代码。</p>
+<h2 id="异常类型和多级-catch-匹配"><a href="#异常类型和多级-catch-匹配" class="headerlink" title="异常类型和多级 catch 匹配"></a>异常类型和多级 catch 匹配</h2><p>异常类型可以是基本类型，也可以是聚合类型。C++本身和标准库函数抛出的异常，都是 exception 类或其子类的异常。</p>
+<p><code>exceptionType variable</code>和函数的形参类似，当异常发生后，会将异常数据传递给 variable 变量。</p>
+<p>一个 try 后面可以跟多个 catch，当异常发生时，程序会按照从上到下的顺序，将异常类型和 catch 所能接收的类型逐个匹配。</p>
+<p>catch 在匹配过程中会发生类型转换，只包括向上转型、const 转换和数组或函数指针转换，其他类型转换不能应用于catch。</p>
+<h2 id="抛出异常"><a href="#抛出异常" class="headerlink" title="抛出异常"></a>抛出异常</h2><p><code>throw</code>关键字显示地抛出异常：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">throw</span> exceptionData;</span><br></pre></td></tr></table></figure>
 
+<p>exceptionData 是“异常数据”的意思，可以包含任意的信息。exceptionData 可以是 int、float、bool 等基本类型，也可以是指针、数组、字符串、结构体、类等聚合类型。</p>
+<p><code>throw</code>关键字除了可以用在函数体中抛出异常，还可以用在函数头和函数体之间，指明当前函数能够抛出的异常类型，这称为<strong>异常规范</strong>（Exception specification），异常指示符或异常列表。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">double</span> <span class="title">func</span> <span class="params">(<span class="type">char</span> param)</span> <span class="title">throw</span> <span class="params">(<span class="type">int</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="type">double</span> <span class="title">func</span> <span class="params">(<span class="type">char</span> param)</span> <span class="title">throw</span> <span class="params">(<span class="type">int</span>, <span class="type">char</span>, exception)</span></span>;</span><br><span class="line"><span class="function"><span class="type">double</span> <span class="title">func</span> <span class="params">(<span class="type">char</span> param)</span> <span class="title">throw</span> <span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>throw 指明该函数只能抛出 int 类型的异常，其他类型的异常 try 将无法捕获。</li>
+<li>如果函数抛出多种类型异常，可以用逗号隔开。</li>
+<li>如果函数不会抛出任何异常，<code>()</code>中什么也不写。</li>
+</ul>
+<p><strong>1. 虚函数的异常规范</strong></p>
+<p>派生类虚函数的异常规范必须与基类虚函数的异常规范一样或更严格。</p>
+<p><strong>2. 函数定义和声明的异常规范</strong></p>
+<p>异常规范在函数定义和函数声明中必须同时指明，并且必须一致。</p>
+<p><strong>异常规范在C++11中已经启用，不建议使用。</strong></p>
+<h2 id="标准异常基类"><a href="#标准异常基类" class="headerlink" title="标准异常基类"></a>标准异常基类</h2><p>C++语言或标准库抛出的异常都是 exception 的子类，称为<strong>标准异常</strong>。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="comment">//可能抛出异常的语句</span></span><br><span class="line">&#125;<span class="built_in">catch</span>(exception &amp;e)&#123;<span class="comment">// 使用引用提高效率，否则需要对象拷贝</span></span><br><span class="line">    <span class="comment">//处理异常的语句</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>exception 类位于 <code>&lt;exception&gt;</code> 头文件中，它被声明为：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">exception</span>&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">exception</span> () <span class="keyword">throw</span>();  <span class="comment">//构造函数</span></span><br><span class="line">    <span class="built_in">exception</span> (<span class="type">const</span> exception&amp;) <span class="keyword">throw</span>();  <span class="comment">//拷贝构造函数</span></span><br><span class="line">    exception&amp; <span class="keyword">operator</span>= (<span class="type">const</span> exception&amp;) <span class="built_in">throw</span>();  <span class="comment">//运算符重载</span></span><br><span class="line">    <span class="keyword">virtual</span> ~<span class="built_in">exception</span>() <span class="keyword">throw</span>();  <span class="comment">//虚析构函数</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">const</span> <span class="type">char</span>* <span class="title">what</span><span class="params">()</span> <span class="type">const</span> <span class="title">throw</span><span class="params">()</span></span>;  <span class="comment">//虚函数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>exception 类的直接派生类：</p>
+<table>
+<thead>
+<tr>
+<th>异常名称</th>
+<th>说  明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>logic_error</td>
+<td>逻辑错误。</td>
+</tr>
+<tr>
+<td>runtime_error</td>
+<td>运行时错误。</td>
+</tr>
+<tr>
+<td>bad_alloc</td>
+<td>使用 new 或 new[ ] 分配内存失败时抛出的异常。</td>
+</tr>
+<tr>
+<td>bad_typeid</td>
+<td>使用 typeid 操作一个 NULL <a class="link"   target="_blank" rel="noopener" href="http://c.biancheng.net/c/80/" >指针<i class="fas fa-external-link-alt"></i></a>，而且该指针是带有虚函数的类，这时抛出 bad_typeid 异常。</td>
+</tr>
+<tr>
+<td>bad_cast</td>
+<td>使用 dynamic_cast 转换失败时抛出的异常。</td>
+</tr>
+<tr>
+<td>ios_base::failure</td>
+<td>io 过程中出现的异常。</td>
+</tr>
+<tr>
+<td>bad_exception</td>
+<td>这是个特殊的异常，如果函数的异常列表里声明了 bad_exception 异常，当函数内部抛出了异常列表中没有的异常时，如果调用的 unexpected() 函数中抛出了异常，不论什么类型，都会被替换为 bad_exception 类型。</td>
+</tr>
+</tbody></table>
+<p>  logic_error 的派生类： </p>
+<table>
+<thead>
+<tr>
+<th>异常名称</th>
+<th>说  明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>length_error</td>
+<td>试图生成一个超出该类型最大长度的对象时抛出该异常，例如 vector 的 resize 操作。</td>
+</tr>
+<tr>
+<td>domain_error</td>
+<td>参数的值域错误，主要用在数学函数中，例如使用一个负值调用只能操作非负数的函数。</td>
+</tr>
+<tr>
+<td>out_of_range</td>
+<td>超出有效范围。</td>
+</tr>
+<tr>
+<td>invalid_argument</td>
+<td>参数不合适。在标准库中，当利用string对象构造 bitset 时，而 string 中的字符不是 0 或1 的时候，抛出该异常。</td>
+</tr>
+</tbody></table>
+<p>runtime_error 的派生类： </p>
+<table>
+<thead>
+<tr>
+<th>异常名称</th>
+<th>说  明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>range_error</td>
+<td>计算结果超出了有意义的值域范围。</td>
+</tr>
+<tr>
+<td>overflow_error</td>
+<td>算术计算上溢。</td>
+</tr>
+<tr>
+<td>underflow_error</td>
+<td>算术计算下溢。</td>
+</tr>
+</tbody></table>
 
             </div>
 
@@ -249,16 +347,16 @@
                     <div class="article-copyright-info-container">
     <ul class="copyright-info-content">
         <li>
-            <span class="type">Post title</span>：<span class="content">【C/CPP】模板与泛型编程</span>
+            <span class="type">Post title</span>：<span class="content">【C/CPP】异常处理</span>
         </li>
         <li>
             <span class="type">Post author</span>：<span class="content">Fan</span>
         </li>
         <li>
-            <span class="type">Create time</span>：<span class="content">2023-01-19 22:42:35</span>
+            <span class="type">Create time</span>：<span class="content">2023-01-29 21:34:57</span>
         </li>
         <li class="post-link">
-            <span class="type">Post link</span>：<span class="content">2023/01/19/【C-CPP】模板与泛型编程/</span>
+            <span class="type">Post link</span>：<span class="content">2023/01/29/【C-CPP】异常处理/</span>
         </li>
         <li>
             <span class="type">Copyright Notice</span>：<span class="content">All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.</span>
@@ -282,29 +380,14 @@
             
                 <div class="article-nav">
                     
-                        <div class="article-prev">
-                            <a class="prev"
-                               rel="prev"
-                               href="/2023/01/29/%E3%80%90C-CPP%E3%80%91%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/"
-                            >
-                            <span class="left arrow-icon flex-center">
-                              <i class="fas fa-chevron-left"></i>
-                            </span>
-                                <span class="title flex-center">
-                                <span class="post-nav-title-item">【C/CPP】异常处理</span>
-                                <span class="post-nav-item">Prev posts</span>
-                            </span>
-                            </a>
-                        </div>
-                    
                     
                         <div class="article-next">
                             <a class="next"
                                rel="next"
-                               href="/2023/01/16/%E3%80%90C-CPP%E3%80%91%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD/"
+                               href="/2023/01/19/%E3%80%90C-CPP%E3%80%91%E6%A8%A1%E6%9D%BF%E4%B8%8E%E6%B3%9B%E5%9E%8B%E7%BC%96%E7%A8%8B/"
                             >
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">【C/CPP】运算符重载</span>
+                                <span class="post-nav-title-item">【C/CPP】模板与泛型编程</span>
                                 <span class="post-nav-item">Next posts</span>
                             </span>
                                 <span class="right arrow-icon flex-center">
@@ -342,7 +425,7 @@
             <div class="toc-content-container">
                 <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%BA%E7%B1%BB%E5%9E%8B%E8%AF%AD%E8%A8%80%E4%B8%8E%E5%BC%B1%E7%B1%BB%E5%9E%8B%E8%AF%AD%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">强类型语言与弱类型语言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E6%A8%A1%E6%9D%BF"><span class="nav-number">2.</span> <span class="nav-text">函数模板</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E6%A8%A1%E6%9D%BF"><span class="nav-number">3.</span> <span class="nav-text">类模板</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%82%E5%B8%B8%E7%B1%BB%E5%9E%8B%E5%92%8C%E5%A4%9A%E7%BA%A7-catch-%E5%8C%B9%E9%85%8D"><span class="nav-number">1.</span> <span class="nav-text">异常类型和多级 catch 匹配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%9B%E5%87%BA%E5%BC%82%E5%B8%B8"><span class="nav-number">2.</span> <span class="nav-text">抛出异常</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%87%E5%87%86%E5%BC%82%E5%B8%B8%E5%9F%BA%E7%B1%BB"><span class="nav-number">3.</span> <span class="nav-text">标准异常基类</span></a></li></ol>
     </div>
 </div>
 
