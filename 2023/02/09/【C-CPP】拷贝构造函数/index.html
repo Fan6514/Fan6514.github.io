@@ -9,7 +9,7 @@
     
     <title>
         
-            【C/CPP】异常处理 |
+            【C/CPP】拷贝构造函数 |
         
         Fan&#39;s Blog
     </title>
@@ -158,7 +158,7 @@
         <div class="article-content-container">
 
             <div class="article-title">
-                <span class="title-hover-animation">【C/CPP】异常处理</span>
+                <span class="title-hover-animation">【C/CPP】拷贝构造函数</span>
             </div>
 
             
@@ -180,27 +180,16 @@
         
             <i class="fa-regular fa-calendar-plus"></i>&nbsp;
         
-        <span class="pc">2023-01-29 21:34:57</span>
-        <span class="mobile">2023-01-29 21:34</span>
+        <span class="pc">2023-02-09 22:15:25</span>
+        <span class="mobile">2023-02-09 22:15</span>
     </span>
     
         <span class="article-update-date article-meta-item">
         <i class="fas fa-file-pen"></i>&nbsp;
-        <span class="pc">2023-02-01 23:42:15</span>
+        <span class="pc">2023-02-09 22:56:03</span>
     </span>
     
     
-    
-        <span class="article-tags article-meta-item">
-            <i class="fas fa-tags"></i>&nbsp;
-            <ul>
-                
-                    <li>
-                        <a href="/tags/cpp/">cpp</a>&nbsp;
-                    </li>
-                
-            </ul>
-        </span>
     
 
     
@@ -219,126 +208,18 @@
             
 
             <div class="article-content keep-markdown-body">
-                <p>异常处理机制用来捕获运行时的错误，让程序继续执行，或者在结束程序前保存内存中的数据、关闭文件、释放内存等。</p>
-<blockquote>
-<p>  抛出异常，就是报告一个运行时错误，程序根据错误信息进一步处理。</p>
-</blockquote>
-<p>通过异常机制捕获抛出的异常，避免程序崩溃。捕获异常的语法：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="comment">// 可能抛出异常的语句</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">catch</span>(exceptionType variable)&#123;</span><br><span class="line">    <span class="comment">// 处理异常的语句</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+                <h2 id="拷贝构造函数"><a href="#拷贝构造函数" class="headerlink" title="拷贝构造函数"></a>拷贝构造函数</h2><p>拷贝构造函数声明和定义：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Student</span>(string name = <span class="string">&quot;&quot;</span>) : <span class="built_in">name_</span>(name);</span><br><span class="line">    <span class="built_in">Student</span>(<span class="type">const</span> Student &amp;stu);<span class="comment">// 拷贝构造函数</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    string name_;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Student::<span class="built_in">Student</span>(<span class="type">const</span> Student &amp;stu)&#123;</span><br><span class="line">    <span class="keyword">this</span>-&gt;name_ = stu.name_;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Student stu1;</span><br><span class="line">    Student stu2 = stu1;<span class="comment">// 调用拷贝构造函数</span></span><br><span class="line">    <span class="function">Student <span class="title">stu3</span><span class="params">(stu1)</span></span>;<span class="comment">// 调用拷贝构造函数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>其中<code>exceptionType</code>是异常类型，指明当前的 catch 可以处理什么类型的异常；<code>variable</code>是一个变量，用来接收异常信息。</p>
-<p>发生异常时必须将异常明确地抛出，try 才能检测到；如果不抛出来，即使有异常 try 也检测不到。抛出异常就是要明确地告诉程序放生了什么错误。</p>
-<p>检测到异常后程序的执行会从异常点跳转到 catch 所在的位置，位于异常点之后的、并且在当前 try 块内的语句就都不会再执行。执行完 catch 块包含的语句后会继续执行后面的代码。</p>
-<h2 id="异常类型和多级-catch-匹配"><a href="#异常类型和多级-catch-匹配" class="headerlink" title="异常类型和多级 catch 匹配"></a>异常类型和多级 catch 匹配</h2><p>异常类型可以是基本类型，也可以是聚合类型。C++本身和标准库函数抛出的异常，都是 exception 类或其子类的异常。</p>
-<p><code>exceptionType variable</code>和函数的形参类似，当异常发生后，会将异常数据传递给 variable 变量。</p>
-<p>一个 try 后面可以跟多个 catch，当异常发生时，程序会按照从上到下的顺序，将异常类型和 catch 所能接收的类型逐个匹配。</p>
-<p>catch 在匹配过程中会发生类型转换，只包括向上转型、const 转换和数组或函数指针转换，其他类型转换不能应用于catch。</p>
-<h2 id="抛出异常"><a href="#抛出异常" class="headerlink" title="抛出异常"></a>抛出异常</h2><p><code>throw</code>关键字显示地抛出异常：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">throw</span> exceptionData;</span><br></pre></td></tr></table></figure>
-
-<p>exceptionData 是“异常数据”的意思，可以包含任意的信息。exceptionData 可以是 int、float、bool 等基本类型，也可以是指针、数组、字符串、结构体、类等聚合类型。</p>
-<p><code>throw</code>关键字除了可以用在函数体中抛出异常，还可以用在函数头和函数体之间，指明当前函数能够抛出的异常类型，这称为<strong>异常规范</strong>（Exception specification），异常指示符或异常列表。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">double</span> <span class="title">func</span> <span class="params">(<span class="type">char</span> param)</span> <span class="title">throw</span> <span class="params">(<span class="type">int</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="type">double</span> <span class="title">func</span> <span class="params">(<span class="type">char</span> param)</span> <span class="title">throw</span> <span class="params">(<span class="type">int</span>, <span class="type">char</span>, exception)</span></span>;</span><br><span class="line"><span class="function"><span class="type">double</span> <span class="title">func</span> <span class="params">(<span class="type">char</span> param)</span> <span class="title">throw</span> <span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>throw 指明该函数只能抛出 int 类型的异常，其他类型的异常 try 将无法捕获。</li>
-<li>如果函数抛出多种类型异常，可以用逗号隔开。</li>
-<li>如果函数不会抛出任何异常，<code>()</code>中什么也不写。</li>
-</ul>
-<p><strong>1. 虚函数的异常规范</strong></p>
-<p>派生类虚函数的异常规范必须与基类虚函数的异常规范一样或更严格。</p>
-<p><strong>2. 函数定义和声明的异常规范</strong></p>
-<p>异常规范在函数定义和函数声明中必须同时指明，并且必须一致。</p>
-<p><strong>异常规范在C++11中已经启用，不建议使用。</strong></p>
-<h2 id="标准异常基类"><a href="#标准异常基类" class="headerlink" title="标准异常基类"></a>标准异常基类</h2><p>C++语言或标准库抛出的异常都是 exception 的子类，称为<strong>标准异常</strong>。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="comment">//可能抛出异常的语句</span></span><br><span class="line">&#125;<span class="built_in">catch</span>(exception &amp;e)&#123;<span class="comment">// 使用引用提高效率，否则需要对象拷贝</span></span><br><span class="line">    <span class="comment">//处理异常的语句</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>exception 类位于 <code>&lt;exception&gt;</code> 头文件中，它被声明为：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">exception</span>&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">exception</span> () <span class="keyword">throw</span>();  <span class="comment">//构造函数</span></span><br><span class="line">    <span class="built_in">exception</span> (<span class="type">const</span> exception&amp;) <span class="keyword">throw</span>();  <span class="comment">//拷贝构造函数</span></span><br><span class="line">    exception&amp; <span class="keyword">operator</span>= (<span class="type">const</span> exception&amp;) <span class="built_in">throw</span>();  <span class="comment">//运算符重载</span></span><br><span class="line">    <span class="keyword">virtual</span> ~<span class="built_in">exception</span>() <span class="keyword">throw</span>();  <span class="comment">//虚析构函数</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">const</span> <span class="type">char</span>* <span class="title">what</span><span class="params">()</span> <span class="type">const</span> <span class="title">throw</span><span class="params">()</span></span>;  <span class="comment">//虚函数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>exception 类的直接派生类：</p>
-<table>
-<thead>
-<tr>
-<th>异常名称</th>
-<th>说  明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>logic_error</td>
-<td>逻辑错误。</td>
-</tr>
-<tr>
-<td>runtime_error</td>
-<td>运行时错误。</td>
-</tr>
-<tr>
-<td>bad_alloc</td>
-<td>使用 new 或 new[ ] 分配内存失败时抛出的异常。</td>
-</tr>
-<tr>
-<td>bad_typeid</td>
-<td>使用 typeid 操作一个 NULL <a class="link"   target="_blank" rel="noopener" href="http://c.biancheng.net/c/80/" >指针<i class="fas fa-external-link-alt"></i></a>，而且该指针是带有虚函数的类，这时抛出 bad_typeid 异常。</td>
-</tr>
-<tr>
-<td>bad_cast</td>
-<td>使用 dynamic_cast 转换失败时抛出的异常。</td>
-</tr>
-<tr>
-<td>ios_base::failure</td>
-<td>io 过程中出现的异常。</td>
-</tr>
-<tr>
-<td>bad_exception</td>
-<td>这是个特殊的异常，如果函数的异常列表里声明了 bad_exception 异常，当函数内部抛出了异常列表中没有的异常时，如果调用的 unexpected() 函数中抛出了异常，不论什么类型，都会被替换为 bad_exception 类型。</td>
-</tr>
-</tbody></table>
-<p>  logic_error 的派生类： </p>
-<table>
-<thead>
-<tr>
-<th>异常名称</th>
-<th>说  明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>length_error</td>
-<td>试图生成一个超出该类型最大长度的对象时抛出该异常，例如 vector 的 resize 操作。</td>
-</tr>
-<tr>
-<td>domain_error</td>
-<td>参数的值域错误，主要用在数学函数中，例如使用一个负值调用只能操作非负数的函数。</td>
-</tr>
-<tr>
-<td>out_of_range</td>
-<td>超出有效范围。</td>
-</tr>
-<tr>
-<td>invalid_argument</td>
-<td>参数不合适。在标准库中，当利用string对象构造 bitset 时，而 string 中的字符不是 0 或1 的时候，抛出该异常。</td>
-</tr>
-</tbody></table>
-<p>runtime_error 的派生类： </p>
-<table>
-<thead>
-<tr>
-<th>异常名称</th>
-<th>说  明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>range_error</td>
-<td>计算结果超出了有意义的值域范围。</td>
-</tr>
-<tr>
-<td>overflow_error</td>
-<td>算术计算上溢。</td>
-</tr>
-<tr>
-<td>underflow_error</td>
-<td>算术计算下溢。</td>
-</tr>
-</tbody></table>
+<p><strong>拷贝构造函数的参数必须是当前类的引用</strong>，如果是当前类的对象，那么调用拷贝构造函数时，会将另一个对象直接传递给参数，又需要调用拷贝构造函数，会陷入死循环。</p>
+<p>参数最好使用 const 引用，否则对于 const 对象无法使用拷贝构造函数。</p>
+<p>如果没有显示定义拷贝构造函数，编译器会自动生成一个默认构造函数，对所有的成员变量依次赋值。</p>
+<p>如果当一个类存在分配的内存、打开的文件、指向其他数据的指针、网络连接等，就需要显示地定义拷贝构造函数，完整拷贝对象的所有数据（深拷贝和浅拷贝）。</p>
+<h2 id="深拷贝和浅拷贝"><a href="#深拷贝和浅拷贝" class="headerlink" title="深拷贝和浅拷贝"></a>深拷贝和浅拷贝</h2><p>直接将变量内存中的数据拷贝到另一个变量内存中的拷贝方式称为<strong>浅拷贝</strong>，但如果变量的内存数据是指向其他数据的指针或动态分配的内存等，浅拷贝就无法将这些资源完整地拷贝到其他变量。</p>
+<p>将对象所持有地资源一并拷贝地方式称为<strong>深拷贝</strong>，需要显示地定义拷贝构造函数才能达到深拷贝的目的。</p>
+<p>深拷贝需要为新对象重新分配一块内存，用来保存原来对象中的资源。</p>
+<p>如果一个类拥有指针类型的成员变量，大部分情况下就需要深拷贝，只有这样才能使新对象和原来对象直接相互独立。</p>
+<p>另外，在创建对象时需要统计创建对象数目、记录创建时间等预处理工作时，也需要深拷贝。</p>
 
             </div>
 
@@ -347,16 +228,16 @@
                     <div class="article-copyright-info-container">
     <ul class="copyright-info-content">
         <li>
-            <span class="type">Post title</span>：<span class="content">【C/CPP】异常处理</span>
+            <span class="type">Post title</span>：<span class="content">【C/CPP】拷贝构造函数</span>
         </li>
         <li>
             <span class="type">Post author</span>：<span class="content">Fan</span>
         </li>
         <li>
-            <span class="type">Create time</span>：<span class="content">2023-01-29 21:34:57</span>
+            <span class="type">Create time</span>：<span class="content">2023-02-09 22:15:25</span>
         </li>
         <li class="post-link">
-            <span class="type">Post link</span>：<span class="content">2023/01/29/【C-CPP】异常处理/</span>
+            <span class="type">Post link</span>：<span class="content">2023/02/09/【C-CPP】拷贝构造函数/</span>
         </li>
         <li>
             <span class="type">Copyright Notice</span>：<span class="content">All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.</span>
@@ -368,41 +249,18 @@
             
 
             
-                <ul class="post-tags-box">
-                    
-                        <li class="tag-item">
-                            <a href="/tags/cpp/">#cpp</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            
 
             
                 <div class="article-nav">
-                    
-                        <div class="article-prev">
-                            <a class="prev"
-                               rel="prev"
-                               href="/2023/02/09/%E3%80%90C-CPP%E3%80%91%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/"
-                            >
-                            <span class="left arrow-icon flex-center">
-                              <i class="fas fa-chevron-left"></i>
-                            </span>
-                                <span class="title flex-center">
-                                <span class="post-nav-title-item">【C/CPP】拷贝构造函数</span>
-                                <span class="post-nav-item">Prev posts</span>
-                            </span>
-                            </a>
-                        </div>
                     
                     
                         <div class="article-next">
                             <a class="next"
                                rel="next"
-                               href="/2023/01/19/%E3%80%90C-CPP%E3%80%91%E6%A8%A1%E6%9D%BF%E4%B8%8E%E6%B3%9B%E5%9E%8B%E7%BC%96%E7%A8%8B/"
+                               href="/2023/01/29/%E3%80%90C-CPP%E3%80%91%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/"
                             >
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">【C/CPP】模板与泛型编程</span>
+                                <span class="post-nav-title-item">【C/CPP】异常处理</span>
                                 <span class="post-nav-item">Next posts</span>
                             </span>
                                 <span class="right arrow-icon flex-center">
@@ -440,7 +298,7 @@
             <div class="toc-content-container">
                 <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%82%E5%B8%B8%E7%B1%BB%E5%9E%8B%E5%92%8C%E5%A4%9A%E7%BA%A7-catch-%E5%8C%B9%E9%85%8D"><span class="nav-number">1.</span> <span class="nav-text">异常类型和多级 catch 匹配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%9B%E5%87%BA%E5%BC%82%E5%B8%B8"><span class="nav-number">2.</span> <span class="nav-text">抛出异常</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%87%E5%87%86%E5%BC%82%E5%B8%B8%E5%9F%BA%E7%B1%BB"><span class="nav-number">3.</span> <span class="nav-text">标准异常基类</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">拷贝构造函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%B1%E6%8B%B7%E8%B4%9D%E5%92%8C%E6%B5%85%E6%8B%B7%E8%B4%9D"><span class="nav-number">2.</span> <span class="nav-text">深拷贝和浅拷贝</span></a></li></ol>
     </div>
 </div>
 
