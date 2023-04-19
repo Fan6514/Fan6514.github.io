@@ -95,311 +95,105 @@
     <div class="page-main-content is-home">
 
         <div class="page-main-content-top">
-            $logo-title-font-size = 2rem
-$pc-search-icon-font-size = 1.5rem
-$menu-bar-line-height = 2.5px
-$logo-image-box-width = 46px
+            
+<header class="header-wrapper transparent-1">
 
-.header-wrapper {
-  display flex
-  align-items center
-  justify-content center
-  box-sizing border-box
-  width 100%
-  height 100%
-  padding-top $scroll-progress-bar-height
-  background var(--background-color-1)
+    <div class="header-content has-first-screen">
+        <div class="left">
+            
+                <a class="logo-image" href="/">
+                    <img src="/images/logo.svg">
+                </a>
+            
+            <a class="logo-title" href="/">
+               Fan&#39;s Blog
+            </a>
+        </div>
 
-  hover-style(false, 0, 0)
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class="active"
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                TAGS
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                CATEGORIES
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-  .header-content {
-    position relative
-    z-index $z-index-5
-    display flex
-    flex-direction row
-    align-items center
-    justify-content space-between
-    width $main-content-width
-    max-width $content-max-width
-    height 100%
-    transition-t("max-width, width", "0, 0", "0.1, 0.1", "ease, ease")
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class="active"
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">TAGS</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">CATEGORIES</a>
+                </li>
+            
+        </ul>
+    </div>
 
+    <div class="window-mask"></div>
 
-    &.has-first-screen {
-      max-width $has-fs-content-max-width
-    }
+</header>
 
-    .has-toc & {
-      max-width $has-toc-content-max-width
-    }
-
-    +keep-tablet() {
-      width $main-content-width-tablet
-    }
-
-    +keep-mobile() {
-      width $main-content-width-mobile
-    }
-
-    .left {
-      display flex
-      align-items center
-      transition-t("transform", "0", "0.2", "linear")
-
-      .header-shrink & {
-        transform scale(0.72)
-        transform-origin left
-      }
-
-
-      if (hexo-config('base_info.logo_img') || hexo-config('style.logo')) {
-        .logo-image {
-          width $logo-image-box-width
-          height $logo-image-box-width
-          margin-right 8px
-
-
-          +keep-tablet() {
-            width $logo-image-box-width * 0.9
-            height $logo-image-box-width * 0.9
-          }
-
-          +keep-mobile() {
-            width $logo-image-box-width * 0.8
-            height $logo-image-box-width * 0.8
-          }
-
-          img {
-            width 100%
-            border-radius 6px
-          }
-        }
-      }
-
-      .logo-title {
-        color var(--text-color-1)
-        font-weight bold
-        font-size $logo-title-font-size
-        line-height 1
-        letter-spacing 1px
-
-        +keep-tablet() {
-          font-size $logo-title-font-size * 0.9
-        }
-
-        +keep-mobile() {
-          font-size $logo-title-font-size * 0.8
-        }
-      }
-    }
-
-
-    .right {
-
-      .pc {
-
-        .menu-list {
-          display flex
-          align-items center
-
-          +keep-tablet() {
-            display none
-          }
-
-
-          .menu-item {
-            position relative
-            float left
-            margin-left 2rem
-            color var(--text-color-3)
-            font-size 1rem
-            cursor pointer
-
-            &:first-child {
-              margin-left 0
-            }
-
-
-            a:hover
-            .active {
-
-              &::after {
-                position absolute
-                bottom -10px
-                left 50%
-                width 100%
-                height 2px
-                background var(--primary-color)
-                transform translateX(-50%)
-                content ''
-                transition-t("transform, bottom", "0, 0", "0.2, 0.2", "linear, linear")
-
-                .header-shrink & {
-                  bottom -($header-shrink-height / 2 - 12)
-                }
-              }
-            }
-
-            &.search {
-              margin-left 26px
-              font-size $pc-search-icon-font-size
-
-              i {
-                color var(--text-color-3)
-              }
-            }
-          }
-        }
-      }
-
-
-      .mobile {
-        display flex
-        align-items center
-        justify-content space-between
-
-        .icon-item {
-          position relative
-          display none
-          width 20px
-          height 20px
-          margin-left 12px
-          color var(--text-color-3)
-          font-size 18px
-          cursor pointer
-
-          i {
-            color var(--text-color-3)
-          }
-
-          &:first-child {
-            margin-left 0
-          }
-
-          +keep-tablet() {
-            display flex
-            align-items center
-            justify-content center
-          }
-        }
-
-        .menu-bar {
-
-          .menu-bar-middle {
-            position relative
-            width 18px
-            height $menu-bar-line-height
-            background var(--text-color-3)
-
-            .header-drawer-show & {
-              background transparent
-            }
-
-
-            &::before
-            &::after {
-              position absolute
-              left 0
-              width 100%
-              height $menu-bar-line-height
-              background var(--text-color-3)
-              content ''
-              transition-t("transform", "0", "0.38", "ease")
-            }
-
-
-            &::before {
-              top -6px
-
-              .header-drawer-show & {
-                transform translateY(6px) rotate(45deg)
-              }
-            }
-
-
-            &::after {
-              bottom -6px
-
-              .header-drawer-show & {
-                transform translateY(-6px) rotate(-45deg)
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
-
-  .header-drawer {
-    position absolute
-    top 0
-    left 0
-    z-index $z-index-2
-    width 100%
-    padding $header-height 0 20px 0
-    background var(--background-color-1)
-    transform scaleY(0)
-    transform-origin top
-    transition-t("transform", "0", "0.38", "ease")
-
-    .header-drawer-show & {
-      transform scaleY(1)
-    }
-
-    .drawer-menu-list {
-      display flex
-      flex-direction column
-      align-items center
-      justify-content flex-start
-
-      .drawer-menu-item {
-        height 38px
-        margin 6px 0
-        font-size 1rem
-
-        a {
-          padding 6px 20px
-          color var(--text-color-3)
-          border-radius 20px
-
-          &:hover {
-            color var(--text-color-2)
-            border 1px solid var(--text-color-3)
-          }
-
-
-          &.active {
-            color var(--text-color-2)
-            border 1px solid var(--text-color-3)
-          }
-        }
-      }
-    }
-  }
-
-
-  .window-mask {
-    position absolute
-    top 0
-    z-index $z-index-1
-    width 100%
-    height 100vh
-    background rgba(0, 0, 0, 0.4)
-    visibility hidden
-    opacity 0
-    transition-t("transform, opacity", "0, 0", "0.38, 0.38", "ease, ease")
-
-    .header-drawer-show & {
-      visibility visible
-      opacity 1
-    }
-  }
-}
-
-.header-drawer-show {
-  overflow hidden
-}
 
         </div>
 
@@ -467,15 +261,14 @@ typeid运算符获取类型信息
                 
 
                 <h3 class="home-article-title">
-                    <a href="/2023/02/12/%E3%80%90C-CPP%E3%80%91%E8%BD%AC%E6%8D%A2%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/">
-                        【C/CPP】转换构造函数
+                    <a href="/2023/04/19/%E3%80%90C-CPP%E3%80%91%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E6%95%B4%E7%90%86/">
+                        【C-CPP】构造函数整理
                     </a>
                 </h3>
 
                 <div class="home-article-content keep-markdown-body">
                     
-                        将其他类型转换为当前类的类型需要使用转换构造函数。转换构造函数也是一种构造函数，它遵循构造函数的一般规则。转换构造函数只有一个参数。
-1234567891011121314151617#include &lt;string&gt;class Comp...
+                        构造函数
                     
                 </div>
 
@@ -484,8 +277,54 @@ typeid运算符获取类型信息
     <div class="home-article-meta-info">
         <span>
             <i class="fas fa-history"></i>&nbsp;
-            <span class="home-article-date" data-date="Sun Mar 05 2023 21:28:34 GMT+0800">
-                2023-03-05
+            <span class="home-article-date" data-date="Wed Apr 19 2023 21:46:26 GMT+0800">
+                2023-04-19
+            </span>
+        </span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/cpp/">cpp</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a class="read-more" href="/2023/04/19/%E3%80%90C-CPP%E3%80%91%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E6%95%B4%E7%90%86/">Read more&nbsp;<i class="fas fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <h3 class="home-article-title">
+                    <a href="/2023/02/12/%E3%80%90C-CPP%E3%80%91%E8%BD%AC%E6%8D%A2%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/">
+                        【C/CPP】转换构造函数
+                    </a>
+                </h3>
+
+                <div class="home-article-content keep-markdown-body">
+                    
+                        将其他类型转换为当前类的类型需要使用转换构造函数（conversion constructor）。转换构造函数也是一种构造函数，它遵循构造函数的一般规，允许将一种数据类型的对象隐式转换为另一种数据类型的对象。当使用转换构造函数时，编译器会自动调用它将...
+                    
+                </div>
+
+                
+<div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span>
+            <i class="fas fa-history"></i>&nbsp;
+            <span class="home-article-date" data-date="Sat Apr 15 2023 21:34:08 GMT+0800">
+                2023-04-15
             </span>
         </span>
         
@@ -831,55 +670,6 @@ typeid运算符获取类型信息
     </div>
 
     <a class="read-more" href="/2023/01/15/%E3%80%90C-CPP%E3%80%91%E5%A4%9A%E6%80%81%E4%B8%8E%E8%99%9A%E5%87%BD%E6%95%B0/">Read more&nbsp;<i class="fas fa-angle-right"></i></a>
-</div>
-
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2023/01/15/%E3%80%90%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E3%80%91%E6%9C%89%E5%BA%8F%E9%9B%86%E5%90%88%E8%B7%B3%E8%A1%A8/">
-                        【数据结构】有序集合跳表
-                    </a>
-                </h3>
-
-                <div class="home-article-content keep-markdown-body">
-                    
-                        二分查找依赖数组随机访问的特性，如果对链表进行改造，也可以支持类似二分的查找算法，这种数据结构叫做跳表（Skip list）。
-Redis中的有序集合（Sorted Set）使用跳表来实现，可以支持快速插入、删除、查找操作，实现简单。
-
-普通链表在查...
-                    
-                </div>
-
-                
-<div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span>
-            <i class="fas fa-history"></i>&nbsp;
-            <span class="home-article-date" data-date="Sun Jan 15 2023 00:17:44 GMT+0800">
-                2023-01-15
-            </span>
-        </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fas fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a class="read-more" href="/2023/01/15/%E3%80%90%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E3%80%91%E6%9C%89%E5%BA%8F%E9%9B%86%E5%90%88%E8%B7%B3%E8%A1%A8/">Read more&nbsp;<i class="fas fa-angle-right"></i></a>
 </div>
 
             </li>

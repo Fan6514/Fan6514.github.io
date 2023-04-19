@@ -9,7 +9,7 @@
     
     <title>
         
-            【C/CPP】拷贝构造函数与赋值运算符重载 |
+            【C-CPP】构造函数整理 |
         
         Fan&#39;s Blog
     </title>
@@ -158,7 +158,7 @@
         <div class="article-content-container">
 
             <div class="article-title">
-                <span class="title-hover-animation">【C/CPP】拷贝构造函数与赋值运算符重载</span>
+                <span class="title-hover-animation">【C-CPP】构造函数整理</span>
             </div>
 
             
@@ -180,16 +180,27 @@
         
             <i class="fa-regular fa-calendar-plus"></i>&nbsp;
         
-        <span class="pc">2023-02-09 22:15:25</span>
-        <span class="mobile">2023-02-09 22:15</span>
+        <span class="pc">2023-04-19 21:45:37</span>
+        <span class="mobile">2023-04-19 21:45</span>
     </span>
     
         <span class="article-update-date article-meta-item">
         <i class="fas fa-file-pen"></i>&nbsp;
-        <span class="pc">2023-02-19 17:57:19</span>
+        <span class="pc">2023-04-19 21:46:26</span>
     </span>
     
     
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/cpp/">cpp</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
     
 
     
@@ -208,27 +219,7 @@
             
 
             <div class="article-content keep-markdown-body">
-                <h2 id="拷贝构造函数"><a href="#拷贝构造函数" class="headerlink" title="拷贝构造函数"></a>拷贝构造函数</h2><p>拷贝构造函数声明和定义：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Student</span>(string name = <span class="string">&quot;&quot;</span>) : <span class="built_in">name_</span>(name);</span><br><span class="line">    <span class="built_in">Student</span>(<span class="type">const</span> Student &amp;stu);<span class="comment">// 拷贝构造函数</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    string name_;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Student::<span class="built_in">Student</span>(<span class="type">const</span> Student &amp;stu)&#123;</span><br><span class="line">    <span class="keyword">this</span>-&gt;name_ = stu.name_;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Student stu1;</span><br><span class="line">    Student stu2 = stu1;<span class="comment">// 调用拷贝构造函数</span></span><br><span class="line">    <span class="function">Student <span class="title">stu3</span><span class="params">(stu1)</span></span>;<span class="comment">// 调用拷贝构造函数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>拷贝构造函数的参数必须是当前类的引用</strong>，如果是当前类的对象，那么调用拷贝构造函数时，会将另一个对象直接传递给参数，又需要调用拷贝构造函数，会陷入死循环。</p>
-<p>参数最好使用 const 引用，否则对于 const 对象无法使用拷贝构造函数。</p>
-<p>如果没有显示定义拷贝构造函数，编译器会自动生成一个默认构造函数，对所有的成员变量依次赋值。</p>
-<p>如果当一个类存在分配的内存、打开的文件、指向其他数据的指针、网络连接等，就需要显示地定义拷贝构造函数，完整拷贝对象的所有数据（深拷贝和浅拷贝）。</p>
-<h2 id="深拷贝和浅拷贝"><a href="#深拷贝和浅拷贝" class="headerlink" title="深拷贝和浅拷贝"></a>深拷贝和浅拷贝</h2><p>直接将变量内存中的数据拷贝到另一个变量内存中的拷贝方式称为<strong>浅拷贝</strong>，但如果变量的内存数据是指向其他数据的指针或动态分配的内存等，浅拷贝就无法将这些资源完整地拷贝到其他变量。</p>
-<p>将对象所持有的资源一并拷贝的方式称为<strong>深拷贝</strong>，需要显示地定义拷贝构造函数才能达到深拷贝的目的。</p>
-<p>深拷贝需要为新对象重新分配一块内存，用来保存原来对象中的资源。</p>
-<p>如果一个类拥有指针类型的成员变量，大部分情况下就需要深拷贝，只有这样才能使新对象和原来对象之间相互独立。</p>
-<p>另外，在创建对象时需要统计创建对象数目、记录创建时间等预处理工作时，也需要深拷贝。</p>
-<h2 id="重载赋值运算符（-x3D-）"><a href="#重载赋值运算符（-x3D-）" class="headerlink" title="重载赋值运算符（&#x3D;）"></a>重载赋值运算符（&#x3D;）</h2><p>初始化与赋值的区别：初始化发生在定义的时候，只能发生一次；赋值是在初始化完成后，可以发生多次。</p>
-<p>当以拷贝的方式初始化一个对象的时候，会调用拷贝构造函数；当给一个对象赋值时，则会调用重载过的赋值运算符。</p>
-<p>默认重载的赋值运算符将原来对象的成员变量依次赋值给新对象。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Student</span>(string name = <span class="string">&quot;&quot;</span>) : <span class="built_in">name_</span>(name);</span><br><span class="line">    Student&amp; <span class="keyword">operator</span>=(<span class="type">const</span> Student &amp;stu);<span class="comment">// 重载赋值运算符</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    string name_;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Student&amp; Student::<span class="keyword">operator</span>=(<span class="type">const</span> Student &amp;stu)&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span> != &amp;stu) &#123;<span class="comment">// 不是给自己赋值</span></span><br><span class="line">        <span class="keyword">this</span>-&gt;name_ = stu.name_;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Student stu1;</span><br><span class="line">    Student stu2 = stu1;<span class="comment">// 调用拷贝构造函数</span></span><br><span class="line">    stu2 = stu1;<span class="comment">// 调用赋值运算符重载函数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>赋值运算符的重载函数返回类型为引用，避免返回时又调用一次拷贝构造函数。赋值运算符重载函数除了能有对象引用这样的参数之外，也能有其它参数。但是其它参数必须给出默认值。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Student&amp; <span class="keyword">operator</span>=(<span class="type">const</span> Student&amp; stu, <span class="type">int</span> a = <span class="number">100</span>);</span><br></pre></td></tr></table></figure>
-
-
+                <h2 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h2>
             </div>
 
             
@@ -236,16 +227,16 @@
                     <div class="article-copyright-info-container">
     <ul class="copyright-info-content">
         <li>
-            <span class="type">Post title</span>：<span class="content">【C/CPP】拷贝构造函数与赋值运算符重载</span>
+            <span class="type">Post title</span>：<span class="content">【C-CPP】构造函数整理</span>
         </li>
         <li>
             <span class="type">Post author</span>：<span class="content">Fan</span>
         </li>
         <li>
-            <span class="type">Create time</span>：<span class="content">2023-02-09 22:15:25</span>
+            <span class="type">Create time</span>：<span class="content">2023-04-19 21:45:37</span>
         </li>
         <li class="post-link">
-            <span class="type">Post link</span>：<span class="content">2023/02/09/【C-CPP】拷贝构造函数与赋值运算符重载/</span>
+            <span class="type">Post link</span>：<span class="content">2023/04/19/【C-CPP】构造函数整理/</span>
         </li>
         <li>
             <span class="type">Copyright Notice</span>：<span class="content">All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.</span>
@@ -257,33 +248,26 @@
             
 
             
+                <ul class="post-tags-box">
+                    
+                        <li class="tag-item">
+                            <a href="/tags/cpp/">#cpp</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            
 
             
                 <div class="article-nav">
-                    
-                        <div class="article-prev">
-                            <a class="prev"
-                               rel="prev"
-                               href="/2023/02/12/%E3%80%90C-CPP%E3%80%91%E8%BD%AC%E6%8D%A2%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/"
-                            >
-                            <span class="left arrow-icon flex-center">
-                              <i class="fas fa-chevron-left"></i>
-                            </span>
-                                <span class="title flex-center">
-                                <span class="post-nav-title-item">【C/CPP】转换构造函数</span>
-                                <span class="post-nav-item">Prev posts</span>
-                            </span>
-                            </a>
-                        </div>
                     
                     
                         <div class="article-next">
                             <a class="next"
                                rel="next"
-                               href="/2023/01/29/%E3%80%90C-CPP%E3%80%91%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/"
+                               href="/2023/02/12/%E3%80%90C-CPP%E3%80%91%E8%BD%AC%E6%8D%A2%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/"
                             >
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">【C/CPP】异常处理</span>
+                                <span class="post-nav-title-item">【C/CPP】转换构造函数</span>
                                 <span class="post-nav-item">Next posts</span>
                             </span>
                                 <span class="right arrow-icon flex-center">
@@ -321,7 +305,7 @@
             <div class="toc-content-container">
                 <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">拷贝构造函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%B1%E6%8B%B7%E8%B4%9D%E5%92%8C%E6%B5%85%E6%8B%B7%E8%B4%9D"><span class="nav-number">2.</span> <span class="nav-text">深拷贝和浅拷贝</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E8%BD%BD%E8%B5%8B%E5%80%BC%E8%BF%90%E7%AE%97%E7%AC%A6%EF%BC%88-x3D-%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">重载赋值运算符（&#x3D;）</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">构造函数</span></a></li></ol>
     </div>
 </div>
 
