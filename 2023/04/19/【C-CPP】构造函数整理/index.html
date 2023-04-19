@@ -9,7 +9,7 @@
     
     <title>
         
-            【C-CPP】构造函数整理 |
+            【C-CPP】构造函数知识点整理 |
         
         Fan&#39;s Blog
     </title>
@@ -158,7 +158,7 @@
         <div class="article-content-container">
 
             <div class="article-title">
-                <span class="title-hover-animation">【C-CPP】构造函数整理</span>
+                <span class="title-hover-animation">【C-CPP】构造函数知识点整理</span>
             </div>
 
             
@@ -186,7 +186,7 @@
     
         <span class="article-update-date article-meta-item">
         <i class="fas fa-file-pen"></i>&nbsp;
-        <span class="pc">2023-04-19 21:46:26</span>
+        <span class="pc">2023-04-19 23:16:35</span>
     </span>
     
     
@@ -219,7 +219,90 @@
             
 
             <div class="article-content keep-markdown-body">
-                <h2 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h2>
+                <h2 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h2><p>构造函数是一种特殊的成员函数，用于在<strong>创建对象时初始化对象的成员变量</strong>。与其他成员函数一样，构造函数位于类定义的内部，并且可以是公共的、私有的或受保护的。</p>
+<blockquote>
+<p>  只要类的对象被创建，就会执行构造函数。</p>
+</blockquote>
+<p>C++中的构造函数有以下几个特点：</p>
+<ol>
+<li>构造函数的名称必须与类名相同。</li>
+<li>构造函数没有返回值，也不需要显式地声明返回类型。</li>
+<li>构造函数可以有参数，这些参数可以用来传递初始化对象的值。</li>
+<li>如果没有定义构造函数，编译器会生成默认构造函数。</li>
+<li>如果定义了带参数的构造函数，则必须同时定义默认构造函数，否则会导致编译错误。</li>
+</ol>
+<h3 id="成员初始化列表"><a href="#成员初始化列表" class="headerlink" title="成员初始化列表"></a>成员初始化列表</h3><p>在使用构造函数初始化对象时，可以使用<strong>成员初始化列表</strong>（member initialization list）来初始化对象的成员变量。成员初始化列表使用冒号分隔，并在冒号后面跟随一系列初始化语句，每个语句由成员变量名称和相应的值组成。例如：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">MyClass</span>(<span class="type">int</span> value) : <span class="built_in">m_value</span>(value) &#123;&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> m_value;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>  注意：</p>
+<ol>
+<li>成员初始化列表中的初始化顺序与在类定义中声明的顺序无关，而是<strong>与在类定义中定义成员变量的顺序有关</strong>。成员初始化列表中应该按照类定义中的成员变量声明顺序来初始化成员变量。</li>
+<li><strong>成员初始化列表只能在构造函数中使用</strong>。</li>
+<li><strong>const 和引用成员变量只能在成员初始化列表中初始化</strong>，不能在构造函数体中初始化。因为 const 和引用成员变量必须在创建对象时被初始化，并且不能被重新赋值。</li>
+<li>必须初始化所有成员变量：使用成员初始化列表时，必须为所有成员变量进行初始化，否则会导致编译错误。</li>
+<li>可以使用表达式和函数来初始化成员变量：成员初始化列表中的值可以是表达式或函数调用的返回值。</li>
+</ol>
+</blockquote>
+<h3 id="默认构造函数"><a href="#默认构造函数" class="headerlink" title="默认构造函数"></a>默认构造函数</h3><p>如果一个类没有定义任何构造函数，编译器会自动为该类生成一个默认构造函数。默认构造函数是一个无参数的构造函数，它可以用来创建对象并初始化对象的成员变量。</p>
+<p>如果一个类定义了带参数的构造函数，但没有定义默认构造函数，则该类只能通过显式调用带参数的构造函数来创建对象。</p>
+<p>在定义带参数的构造函数时，通常也要同时定义默认构造函数，C++11中可以使用 <code>= default</code> 关键字来显式地要求编译器生成默认构造函数。例如：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">MyClass</span>() = <span class="keyword">default</span>; <span class="comment">// 显式要求生成默认构造函数</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>  需要注意的是，使用 <code>= default</code> 要求生成默认构造函数时，需要遵循以下几个规则：</p>
+<ol>
+<li>只能用于<strong>默认构造函数、拷贝构造函数、拷贝赋值函数和析构函数</strong>，不能用于其他类型的构造函数。</li>
+<li>默认构造函数、拷贝构造函数、拷贝赋值函数和析构函数中的函数体必须为空。</li>
+<li>如果类中定义了其他构造函数，那么必须在默认构造函数、拷贝构造函数和拷贝赋值函数中使用 <code>= default</code> 显式要求编译器生成函数。</li>
+</ol>
+</blockquote>
+<p>如果一个类不希望生成默认构造函数，则可以使用关键字 <code>delete</code> 来禁止编译器自动生成默认构造函数，例如：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">MyClass</span>(<span class="type">int</span> value) &#123;</span><br><span class="line">        <span class="comment">// 构造函数的函数体</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">MyClass</span>() = <span class="keyword">delete</span>; <span class="comment">// 禁止生成默认构造函数</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>  使用 <code>= delete</code> 关键字可以防止意外调用默认构造函数，从而提高程序的安全性。因此，在某些情况下，可以使用 <code>= delete</code> 显式删除默认构造函数。例如，当一个类中的成员变量都是 const 或者引用类型时，就需要删除默认构造函数，否则会导致编译器生成的默认构造函数无法正确地初始化这些成员变量。</p>
+</blockquote>
+<h3 id="委托构造函数"><a href="#委托构造函数" class="headerlink" title="委托构造函数"></a>委托构造函数</h3><p>C++11引入委托构造函数，它允许一个构造函数调用另一个构造函数完成部分或全部的初始化工作。这个特性可以简化代码并提高代码重用性。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="built_in">MyClass</span>() : <span class="built_in">MyClass</span>(<span class="number">0</span>, <span class="number">0</span>) &#123;&#125;</span><br><span class="line">  <span class="built_in">MyClass</span>(<span class="type">int</span> x) : <span class="built_in">MyClass</span>(x, <span class="number">0</span>) &#123;&#125;</span><br><span class="line">  <span class="built_in">MyClass</span>(<span class="type">int</span> x, <span class="type">int</span> y) : <span class="built_in">x_</span>(x), <span class="built_in">y_</span>(y) &#123;&#125;</span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">Print</span><span class="params">()</span> </span>&#123; std::cout &lt;&lt; <span class="string">&quot;x = &quot;</span> &lt;&lt; x_ &lt;&lt; <span class="string">&quot;, y = &quot;</span> &lt;&lt; y_ &lt;&lt; std::endl; &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">  <span class="type">int</span> x_;</span><br><span class="line">  <span class="type">int</span> y_;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  MyClass a;</span><br><span class="line">  a.<span class="built_in">Print</span>();  <span class="comment">// Output: x = 0, y = 0</span></span><br><span class="line">  </span><br><span class="line">  <span class="function">MyClass <span class="title">b</span><span class="params">(<span class="number">1</span>)</span></span>;</span><br><span class="line">  b.<span class="built_in">Print</span>();  <span class="comment">// Output: x = 1, y = 0</span></span><br><span class="line">  </span><br><span class="line">  <span class="function">MyClass <span class="title">c</span><span class="params">(<span class="number">2</span>, <span class="number">3</span>)</span></span>;</span><br><span class="line">  c.<span class="built_in">Print</span>();  <span class="comment">// Output: x = 2, y = 3</span></span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>构造函数的委托必须在构造函数的初始化列表中完成，否则会导致编译错误。此外，一个类只能有一个委托构造函数，其他构造函数必须直接初始化对象的成员。</p>
+<h3 id="拷贝构造函数"><a href="#拷贝构造函数" class="headerlink" title="拷贝构造函数"></a>拷贝构造函数</h3><p>拷贝构造函数是一种特殊的构造函数，用于在创建对象时，以另一个同类型对象作为参数，通过拷贝另一个对象的成员变量值来初始化新对象的成员变量。</p>
+<p>拷贝构造函数的语法如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">MyClass</span>(); <span class="comment">// 默认构造函数</span></span><br><span class="line">    <span class="built_in">MyClass</span>(<span class="type">const</span> MyClass&amp; other); <span class="comment">// 拷贝构造函数</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>其中，<code>MyClass</code>是类名，<code>other</code>是另一个同类型的对象，使用<code>const</code>修饰参数可以防止在拷贝过程中修改原对象的值。</p>
+<p>拷贝构造函数是在以下情况下自动调用的：</p>
+<ul>
+<li>通过另一个同类型对象初始化一个新对象时；</li>
+<li>将一个同类型对象作为参数传递给函数时；</li>
+<li>函数返回一个同类型对象时；</li>
+<li>从另一个同类型对象复制一个对象时。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="built_in">MyClass</span>(<span class="type">int</span> x, <span class="type">int</span> y) : <span class="built_in">x_</span>(x), <span class="built_in">y_</span>(y) &#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Constructor called.&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 拷贝构造函数</span></span><br><span class="line">  <span class="built_in">MyClass</span>(<span class="type">const</span> MyClass&amp; other) : <span class="built_in">x_</span>(other.x_), <span class="built_in">y_</span>(other.y_) &#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Copy constructor called.&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">Print</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;x = &quot;</span> &lt;&lt; x_ &lt;&lt; <span class="string">&quot;, y = &quot;</span> &lt;&lt; y_ &lt;&lt; std::endl;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">  <span class="type">int</span> x_;</span><br><span class="line">  <span class="type">int</span> y_;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="function">MyClass <span class="title">a</span><span class="params">(<span class="number">1</span>, <span class="number">2</span>)</span></span>;</span><br><span class="line">  MyClass b = a; <span class="comment">// 拷贝构造函数被调用</span></span><br><span class="line">  <span class="function">MyClass <span class="title">c</span><span class="params">(a)</span></span>;  <span class="comment">// 拷贝构造函数被调用</span></span><br><span class="line">  b.<span class="built_in">Print</span>();     <span class="comment">// Output: x = 1, y = 2</span></span><br><span class="line">  c.<span class="built_in">Print</span>();     <span class="comment">// Output: x = 1, y = 2</span></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果没有显式定义拷贝构造函数，编译器会自动生成默认的拷贝构造函数，这个默认的拷贝构造函数会简单地将对象的成员变量复制到新对象中，如果类中有指针等动态分配的成员变量，可能会导致意想不到的错误，因此在需要时最好显式地定义拷贝构造函数。</p>
+<blockquote>
+<p>  初始化与赋值的区别：初始化发生在定义的时候，只能发生一次；赋值是在初始化完成后，可以发生多次。</p>
+<p>  初始化时的 “&#x3D;” 调用的是拷贝构造函数，而在赋值时的 “&#x3D;” 调用等号操作符（调用重载过的赋值运算符）。具体内容在运算符重载的相关笔记中。</p>
+</blockquote>
+<h3 id="构造函数使用的关键字"><a href="#构造函数使用的关键字" class="headerlink" title="构造函数使用的关键字"></a>构造函数使用的关键字</h3><h4 id="explicit"><a href="#explicit" class="headerlink" title="explicit"></a>explicit</h4><p>关键字<code>explicit</code>可以用来声明构造函数或类型转换函数，表示该函数只能显式调用，不能隐式调用。</p>
+<p>如果一个构造函数或类型转换函数被声明为<code>explicit</code>，那么它就不能用于隐式类型转换或隐式对象的创建。这样做的目的是为了避免程序中隐式转换导致的不明确行为和错误。如果一个函数不声明为<code>explicit</code>，那么它就可以被隐式调用。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">// 构造函数声明为 explicit</span></span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="title">MyClass</span><span class="params">(<span class="type">int</span> value)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>-&gt;value = value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">getValue</span><span class="params">()</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> value;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">doSomething</span><span class="params">(MyClass obj)</span> </span>&#123;</span><br><span class="line">    std::cout &lt;&lt; obj.<span class="built_in">getValue</span>() &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="function">MyClass <span class="title">obj1</span><span class="params">(<span class="number">10</span>)</span></span>; <span class="comment">// 显式调用构造函数</span></span><br><span class="line">    MyClass obj2 = <span class="number">20</span>; <span class="comment">// 隐式调用构造函数，编译错误</span></span><br><span class="line">    <span class="built_in">doSomething</span>(<span class="number">30</span>); <span class="comment">// 隐式调用构造函数，编译错误</span></span><br><span class="line">    <span class="built_in">doSomething</span>(<span class="built_in">MyClass</span>(<span class="number">40</span>)); <span class="comment">// 显式调用构造函数</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="constexpr"><a href="#constexpr" class="headerlink" title="constexpr"></a>constexpr</h4><p>C++11 中引入了 <code>constexpr</code> 关键字，它用于声明一个可以在编译时求值的常量表达式，这样可以在编译期间对表达式进行求值，避免了在运行期间进行计算的开销。</p>
+<p>构造函数也可以使用 <code>constexpr</code> 关键字来声明，表示该<strong>构造函数可以在编译期间被调用并求值</strong>。使用 <code>constexpr</code> 构造函数可以在编译期间生成常量对象，提高程序的效率。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">constexpr</span> <span class="title">MyClass</span><span class="params">(<span class="type">int</span> value)</span></span></span><br><span class="line"><span class="function">        : m_value(value)</span></span><br><span class="line"><span class="function">    &#123;</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">constexpr</span> <span class="type">int</span> <span class="title">getValue</span><span class="params">()</span> <span class="type">const</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> m_value;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> m_value;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">constexpr</span> MyClass <span class="title">obj</span><span class="params">(<span class="number">123</span>)</span></span>;</span><br><span class="line">    <span class="built_in">static_assert</span>(obj.<span class="built_in">getValue</span>() == <span class="number">123</span>, <span class="string">&quot;Error: wrong value&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的示例在 <code>main</code> 函数中，使用 <code>constexpr</code> 构造函数创建了一个常量对象 <code>obj</code>，并使用 <code>static_assert</code> 进行断言，确保其值为 123。由于 <code>constexpr</code> 构造函数可以在编译期间进行求值，因此可以保证 <code>obj</code> 的值在编译期间就已经确定，不会受到运行时的影响。</p>
+<p>需要注意的是，使用 <code>constexpr</code> 构造函数有一些限制:</p>
+<ol>
+<li><p>必须对所有成员变量进行初始化;</p>
+</li>
+<li><p>初始化必须为常量表达式。</p>
+</li>
+</ol>
+
             </div>
 
             
@@ -227,7 +310,7 @@
                     <div class="article-copyright-info-container">
     <ul class="copyright-info-content">
         <li>
-            <span class="type">Post title</span>：<span class="content">【C-CPP】构造函数整理</span>
+            <span class="type">Post title</span>：<span class="content">【C-CPP】构造函数知识点整理</span>
         </li>
         <li>
             <span class="type">Post author</span>：<span class="content">Fan</span>
@@ -305,7 +388,7 @@
             <div class="toc-content-container">
                 <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">构造函数</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">构造函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%88%90%E5%91%98%E5%88%9D%E5%A7%8B%E5%8C%96%E5%88%97%E8%A1%A8"><span class="nav-number">1.1.</span> <span class="nav-text">成员初始化列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%BB%98%E8%AE%A4%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="nav-number">1.2.</span> <span class="nav-text">默认构造函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A7%94%E6%89%98%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="nav-number">1.3.</span> <span class="nav-text">委托构造函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="nav-number">1.4.</span> <span class="nav-text">拷贝构造函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E4%BD%BF%E7%94%A8%E7%9A%84%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">1.5.</span> <span class="nav-text">构造函数使用的关键字</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#explicit"><span class="nav-number">1.5.1.</span> <span class="nav-text">explicit</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#constexpr"><span class="nav-number">1.5.2.</span> <span class="nav-text">constexpr</span></a></li></ol></li></ol></li></ol>
     </div>
 </div>
 
